@@ -10,6 +10,9 @@ public class DoubleCash extends MinGdxGame {
 
 	@Override
 	protected Scene initGame() {
+		minGdx.defaultSettings.VIEWPORT_WIDTH = Constants.GUI_WIDTH;
+		minGdx.defaultSettings.VIEWPORT_HEIGHT = Constants.GUI_HEIGHT;
+
 		loadAssets();
 
 		splashTransition = SceneTransitions.fade(1f);
