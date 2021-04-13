@@ -39,6 +39,7 @@ allprojects {
         gradlePluginPortal()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url 'https://jitpack.io' }
     }
 }
 
@@ -110,7 +111,7 @@ project(":html") {
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion:sources"
         api "com.badlogicgames.gdx:gdx-box2d-gwt:$gdxVersion:sources"
         api "com.badlogicgames.gdx:gdx-ai:$aiVersion:sources"
-        api "com.isoterik.mgdx:mingdx:2.0.0:sources"
+        api "com.github.iSoterikTechnologies:mingdx:v2.0.0:sources"
     }
 }
 
@@ -123,6 +124,6 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-ai:$aiVersion"
 
-        api "com.isoterik.mgdx:mingdx:2.0.0"
+        api 'com.github.iSoterikTechnologies:mingdx:v2.0.0'
     }
 }
