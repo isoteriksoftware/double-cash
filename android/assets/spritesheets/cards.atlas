@@ -1,0 +1,265 @@
+
+cards.png
+size: 2048, 1024
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+cardBack
+  rotate: false
+  xy: 286, 770
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardClubs10
+  rotate: false
+  xy: 712, 578
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardClubs2
+  rotate: false
+  xy: 854, 770
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardClubs3
+  rotate: false
+  xy: 428, 770
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardClubs4
+  rotate: false
+  xy: 854, 386
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardClubs5
+  rotate: false
+  xy: 570, 578
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardClubs6
+  rotate: false
+  xy: 144, 578
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardClubs7
+  rotate: false
+  xy: 854, 578
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardClubs8
+  rotate: false
+  xy: 286, 386
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardClubs9
+  rotate: false
+  xy: 712, 2
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardDiamonds10
+  rotate: false
+  xy: 712, 770
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardDiamonds2
+  rotate: false
+  xy: 286, 194
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardDiamonds3
+  rotate: false
+  xy: 144, 770
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardDiamonds4
+  rotate: false
+  xy: 570, 194
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardDiamonds5
+  rotate: false
+  xy: 2, 2
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardDiamonds6
+  rotate: false
+  xy: 996, 578
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardDiamonds7
+  rotate: false
+  xy: 286, 2
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardDiamonds8
+  rotate: false
+  xy: 2, 194
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardDiamonds9
+  rotate: false
+  xy: 996, 770
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardHearts10
+  rotate: false
+  xy: 2, 770
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardHearts2
+  rotate: false
+  xy: 428, 578
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardHearts3
+  rotate: false
+  xy: 854, 194
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardHearts4
+  rotate: false
+  xy: 570, 386
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardHearts5
+  rotate: false
+  xy: 144, 386
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardHearts6
+  rotate: false
+  xy: 570, 2
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardHearts7
+  rotate: false
+  xy: 144, 2
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardHearts8
+  rotate: false
+  xy: 2, 578
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardHearts9
+  rotate: false
+  xy: 428, 2
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardSpades10
+  rotate: false
+  xy: 570, 770
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardSpades2
+  rotate: false
+  xy: 286, 578
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardSpades3
+  rotate: false
+  xy: 712, 194
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardSpades4
+  rotate: false
+  xy: 428, 386
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardSpades5
+  rotate: false
+  xy: 2, 386
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardSpades6
+  rotate: false
+  xy: 712, 386
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardSpades7
+  rotate: false
+  xy: 144, 194
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardSpades8
+  rotate: false
+  xy: 1138, 770
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1
+cardSpades9
+  rotate: false
+  xy: 428, 194
+  size: 140, 190
+  orig: 140, 190
+  offset: 0, 0
+  index: -1

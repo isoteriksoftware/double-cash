@@ -1,6 +1,5 @@
 package com.isoterik.cash4life.double_cash;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.isoterik.cash4life.double_cash.scenes.GamePlayScene;
 import com.isoterik.mgdx.MinGdxGame;
 import com.isoterik.mgdx.Scene;
@@ -20,7 +19,8 @@ public class DoubleCash extends MinGdxGame {
 	}
 
 	private void loadAssets() {
-		minGdx.assets.enqueueFolderContents("images", Texture.class);
+		//minGdx.assets.enqueueFolderContents("images", Texture.class);
+		minGdx.assets.enqueueAtlas("spritesheets/cards.atlas");
 		minGdx.assets.loadAssetsNow();
 	}
 }
