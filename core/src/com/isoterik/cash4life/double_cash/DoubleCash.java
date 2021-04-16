@@ -1,5 +1,7 @@
 package com.isoterik.cash4life.double_cash;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.isoterik.cash4life.double_cash.scenes.GamePlayScene;
 import com.isoterik.mgdx.MinGdxGame;
 import com.isoterik.mgdx.Scene;

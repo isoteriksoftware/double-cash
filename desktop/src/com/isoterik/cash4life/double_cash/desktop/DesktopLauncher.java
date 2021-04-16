@@ -10,7 +10,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = Constants.GUI_WIDTH;
 		config.height = Constants.GUI_HEIGHT;
-		config.forceExit = false;
+		//config.resizable = false;
 
 		new LwjglApplication(new DoubleCash(), config);
 	}
