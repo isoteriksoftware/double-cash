@@ -22,7 +22,8 @@ public class GamePlayScene extends Scene {
     private WorldUnits worldUnits;
 
     private Array<GameObject> cards;
-    
+    private final TextureRegion cardBackSprite;
+
     public GamePlayScene() {
         minGdx = MinGdx.instance();
         setupCamera();
@@ -47,10 +48,14 @@ public class GamePlayScene extends Scene {
 
         cards = new Array<>();
 
+        cardBackSprite = minGdx.assets.getAtlas("spritesheets/cards.atlas").findRegion("shirt_red");
         for (TextureAtlas.AtlasRegion region : minGdx.assets.getAtlas("spritesheets/cards.atlas")
                 .getRegions()) {
-            GameObject card = newSpriteObject("Card", region);
-            card.addComponent(new Card(region.name));
+            if (region.name.startsWith("shirt"))
+                continue;
+
+            GameObject card = newSpriteObject("Card", cardBackSprite);
+            card.addComponent(new Card(region, cardBackSprite));
             cards.add(card);
         }
 

@@ -6,246 +6,260 @@ filter: Nearest, Nearest
 repeat: none
 Club_10
   rotate: false
-  xy: 371, 2
+  xy: 494, 172
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Club_2
   rotate: false
-  xy: 371, 342
+  xy: 371, 2
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Club_3
   rotate: false
-  xy: 1109, 342
+  xy: 1232, 342
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Club_4
   rotate: false
-  xy: 494, 2
+  xy: 617, 172
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Club_5
   rotate: false
-  xy: 125, 172
+  xy: 248, 342
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Club_6
   rotate: false
-  xy: 863, 172
+  xy: 986, 342
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Club_7
   rotate: false
-  xy: 371, 172
+  xy: 494, 342
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Club_8
   rotate: false
-  xy: 2, 342
+  xy: 2, 171
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Club_9
   rotate: false
-  xy: 740, 172
+  xy: 863, 342
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Diamonds_10
   rotate: false
-  xy: 617, 2
+  xy: 740, 172
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Diamonds_2
   rotate: false
-  xy: 1109, 172
+  xy: 1232, 172
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Diamonds_3
   rotate: false
-  xy: 617, 342
+  xy: 617, 2
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Diamonds_4
   rotate: false
-  xy: 125, 2
+  xy: 248, 172
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Diamonds_5
   rotate: false
-  xy: 863, 2
+  xy: 986, 172
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Diamonds_6
   rotate: false
-  xy: 1232, 172
+  xy: 1355, 172
   size: 120, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Diamonds_7
   rotate: false
-  xy: 2, 172
+  xy: 125, 342
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Diamonds_8
   rotate: false
-  xy: 1354, 343
+  xy: 2, 2
   size: 121, 167
   orig: 121, 174
   offset: 0, 7
   index: -1
 Diamonds_9
   rotate: false
-  xy: 248, 172
+  xy: 371, 342
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Hearts_10
   rotate: false
-  xy: 740, 2
+  xy: 863, 172
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Hearts_2
   rotate: false
-  xy: 1353, 2
+  xy: 1476, 2
   size: 120, 168
   orig: 121, 174
   offset: 1, 6
   index: -1
 Hearts_3
   rotate: false
-  xy: 1232, 342
+  xy: 1355, 342
   size: 120, 168
   orig: 121, 174
   offset: 1, 6
   index: -1
 Hearts_4
   rotate: false
-  xy: 2, 2
+  xy: 125, 172
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Hearts_5
   rotate: false
-  xy: 740, 342
+  xy: 740, 2
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Hearts_6
   rotate: false
-  xy: 1231, 2
+  xy: 1354, 2
   size: 120, 168
   orig: 121, 174
   offset: 1, 6
   index: -1
 Hearts_7
   rotate: false
-  xy: 986, 172
+  xy: 1109, 172
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Hearts_8
   rotate: false
-  xy: 494, 172
+  xy: 617, 342
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Hearts_9
   rotate: false
-  xy: 1109, 2
+  xy: 1232, 2
   size: 120, 168
   orig: 121, 174
   offset: 1, 6
   index: -1
 Spades_2
   rotate: false
-  xy: 617, 172
+  xy: 740, 342
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Spades_3
   rotate: false
-  xy: 248, 342
+  xy: 248, 2
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Spades_4
   rotate: false
-  xy: 986, 342
+  xy: 1109, 342
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Spades_5
   rotate: false
-  xy: 494, 342
+  xy: 494, 2
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Spades_6
   rotate: false
-  xy: 125, 342
+  xy: 125, 2
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Spades_7
   rotate: false
-  xy: 863, 342
+  xy: 863, 2
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Spades_8
   rotate: false
-  xy: 248, 2
+  xy: 371, 172
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
   index: -1
 Spades_9
   rotate: false
+  xy: 1109, 2
+  size: 121, 168
+  orig: 121, 174
+  offset: 0, 6
+  index: -1
+shirt_blue
+  rotate: false
   xy: 986, 2
   size: 121, 168
   orig: 121, 174
   offset: 0, 6
+  index: -1
+shirt_red
+  rotate: false
+  xy: 2, 341
+  size: 121, 169
+  orig: 121, 174
+  offset: 0, 5
   index: -1
