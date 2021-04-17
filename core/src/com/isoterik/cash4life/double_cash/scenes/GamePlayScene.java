@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.isoterik.cash4life.double_cash.Constants;
 import com.isoterik.cash4life.double_cash.components.Card;
 import com.isoterik.mgdx.GameObject;
@@ -22,12 +23,13 @@ public class GamePlayScene extends Scene {
     private Array<GameObject> cards;
     
     public GamePlayScene() {
-        super();
-
         minGdx = MinGdx.instance();
         setupCamera();
 
         setBackgroundColor(new Color(.1f, .1f, .2f, 1f));
+
+        GameObject bg = newSpriteObject(minGdx.assets.regionForTexture("images/background.png"));
+        addGameObject(bg);
 
         cards = new Array<>();
 
@@ -39,25 +41,17 @@ public class GamePlayScene extends Scene {
         }
 
         GameObject card = cards.get(6);
-
-        float x = (worldUnits.getWorldWidth() - card.transform.size.x)/2f;
-        float y = (worldUnits.getWorldHeight() - card.transform.getHeight())/2f;
-
-        //card.transform.setPosition(x, y);
-
+        card.transform.setPosition((worldUnits.getWorldWidth() - card.transform.getWidth())/2f,
+                (worldUnits.getWorldHeight() - card.transform.getHeight())/2f);
         addGameObject(card);
     }
 
     private void setupCamera() {
-        worldUnits = new WorldUnits(Constants.GUI_WIDTH, Constants.GUI_HEIGHT, 100);
+        worldUnits = new WorldUnits(Constants.GUI_WIDTH, Constants.GUI_HEIGHT, 64);
 
-        mainCamera.setup(new ExtendViewport(worldUnits.getWorldWidth(), worldUnits.getWorldHeight(), worldUnits.getWorldWidth(), worldUnits.getWorldHeight(),
+        mainCamera.setup(new ExtendViewport(worldUnits.getWorldWidth(), worldUnits.getWorldHeight(),
+                worldUnits.getWorldWidth(), worldUnits.getWorldHeight(),
                 mainCamera.getCamera()), worldUnits);
-    }
-
-    @Override
-    public void __resize(int width, int height) {
-        super.__resize(width, height);
     }
 }
 

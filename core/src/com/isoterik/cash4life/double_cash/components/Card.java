@@ -6,7 +6,7 @@ public class Card extends Component {
     public final int number;
 
     public Card(String regionName) {
-        if (regionName.equalsIgnoreCase("cardBack"))
+        if (regionName.startsWith("shirt"))
             this.number = 0;
         else
             this.number = Integer.parseInt(regionName.replaceAll("[^0-9]", ""));
