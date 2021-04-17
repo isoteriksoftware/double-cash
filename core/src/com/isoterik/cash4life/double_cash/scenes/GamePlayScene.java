@@ -40,8 +40,9 @@ public class GamePlayScene extends Scene {
 
         GameObject opponent = newSpriteObject(minGdx.assets.regionForTexture("images/opponent.png"));
         Transform opponentTransform = opponent.transform;
+        opponentTransform.setScale(1, 0.8f);
         opponentTransform.setPosition((tableTransform.getX() + tableTransform.getWidth()/2f - worldUnits.toWorldUnit(180)),
-                tableTransform.getY() + tableTransform.getHeight() - worldUnits.toWorldUnit(70));
+                tableTransform.getY() + tableTransform.getHeight() - worldUnits.toWorldUnit(95));
         addGameObject(opponent);
 
         cards = new Array<>();
