@@ -13,6 +13,7 @@ import com.isoterik.cash4life.double_cash.components.Card;
 import com.isoterik.mgdx.GameObject;
 import com.isoterik.mgdx.MinGdx;
 import com.isoterik.mgdx.Scene;
+import com.isoterik.mgdx.Transform;
 import com.isoterik.mgdx.m2d.components.SpriteRenderer;
 import com.isoterik.mgdx.utils.WorldUnits;
 
@@ -31,6 +32,18 @@ public class GamePlayScene extends Scene {
         GameObject bg = newSpriteObject(minGdx.assets.regionForTexture("images/background.png"));
         addGameObject(bg);
 
+        GameObject table = newSpriteObject(minGdx.assets.regionForTexture("images/table.png"));
+        Transform tableTransform = table.transform;
+        tableTransform.setPosition((worldUnits.getWorldWidth() - tableTransform.getWidth())/2f,
+                worldUnits.toWorldUnit(10));
+        addGameObject(table);
+
+        GameObject opponent = newSpriteObject(minGdx.assets.regionForTexture("images/opponent.png"));
+        Transform opponentTransform = opponent.transform;
+        opponentTransform.setPosition((tableTransform.getX() + tableTransform.getWidth()/2f - worldUnits.toWorldUnit(180)),
+                tableTransform.getY() + tableTransform.getHeight() - worldUnits.toWorldUnit(70));
+        addGameObject(opponent);
+
         cards = new Array<>();
 
         for (TextureAtlas.AtlasRegion region : minGdx.assets.getAtlas("spritesheets/cards.atlas")
@@ -41,8 +54,7 @@ public class GamePlayScene extends Scene {
         }
 
         GameObject card = cards.get(6);
-        card.transform.setPosition((worldUnits.getWorldWidth() - card.transform.getWidth())/2f,
-                (worldUnits.getWorldHeight() - card.transform.getHeight())/2f);
+        placeInCenter(card, table);
         addGameObject(card);
     }
 
@@ -52,6 +64,14 @@ public class GamePlayScene extends Scene {
         mainCamera.setup(new ExtendViewport(worldUnits.getWorldWidth(), worldUnits.getWorldHeight(),
                 worldUnits.getWorldWidth(), worldUnits.getWorldHeight(),
                 mainCamera.getCamera()), worldUnits);
+    }
+
+    private void placeInCenter(GameObject gameObject, GameObject host) {
+        Transform gt = gameObject.transform;
+        Transform ht = host.transform;
+
+        gt.setPosition((ht.getX() + ht.getWidth()/2f) - gt.getWidth()/2f,
+                (ht.getY() + ht.getHeight()/2f) - gt.getHeight()/2f);
     }
 }
 
