@@ -146,7 +146,7 @@ public class GamePlayScene extends Scene {
         Card card = opponentChoice.getComponent(Card.class);
         card.setOpponentSelected();
 
-        opponentChoice.transform.setPosition(ot.getX(),
+        opponentChoice.transform.setPosition(ot.getX() + (ot.getWidth() - card.getRealWidth())/2f,
                 ot.getY() - card.getRealHeight());
 
         pickedCards.removeValue(opponentChoice, true);
