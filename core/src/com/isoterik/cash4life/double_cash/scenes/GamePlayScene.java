@@ -3,6 +3,7 @@ package com.isoterik.cash4life.double_cash.scenes;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.isoterik.cash4life.double_cash.Constants;
@@ -26,6 +27,10 @@ public class GamePlayScene extends Scene {
 
     private final GameObject table, opponent;
     private GameObject userChoice, opponentChoice;
+
+    private enum GameType { HIGHER, LOWER }
+
+    private GameType gameType = GameType.HIGHER;
 
     public GamePlayScene() {
         minGdx = MinGdx.instance();
@@ -94,6 +99,9 @@ public class GamePlayScene extends Scene {
 
         for (int i = 0; i < Constants.MAX_CARDS; i++)
             pickedCards.add(cards.get(i));
+
+        for (GameObject card : pickedCards)
+            System.out.print(card.getComponent(Card.class).number + " ");
     }
 
     private void newGame() {
@@ -142,6 +150,43 @@ public class GamePlayScene extends Scene {
 
     private void playForOpponent() {
         opponentChoice = pickedCards.random();
+        System.out.println("Initial choice: " + opponentChoice.getComponent(Card.class).number);
+        System.out.println("Max choice: " + getMaximumPick().getComponent(Card.class).number);
+        System.out.println("Min choice: " + getMinimumPick().getComponent(Card.class).number);
+
+        // Get the user chosen number
+        int userNumber = userChoice.getComponent(Card.class).number;
+
+        if (MathUtils.randomBoolean(Constants.WINNING_CHANCE)) {
+            System.out.println("User to win");
+            // Make sure the user wins
+            if (gameType == GameType.HIGHER)
+                opponentChoice = getMinimumPick();
+            else
+                opponentChoice = getMaximumPick();
+        }
+        else {
+            // Make sure the opponent wins
+
+            // If by chance the cards are equal, let it be
+            if (userNumber != opponentChoice.getComponent(Card.class).number) {
+                if (gameType == GameType.HIGHER) {
+                    // If the user chose the highest card then the user wins else we look for a higher card
+                    if (userNumber < getMaximumPick().getComponent(Card.class).number) {
+                        while (userNumber > opponentChoice.getComponent(Card.class).number)
+                            opponentChoice = pickedCards.random();
+                    }
+                }
+                else {
+                    // If the user chose the lowest card then the user wins else we look for a lower card
+                    if (userNumber > getMinimumPick().getComponent(Card.class).number) {
+                        while (userNumber < opponentChoice.getComponent(Card.class).number)
+                            opponentChoice = pickedCards.random();
+                    }
+                }
+            }
+        }
+
         Transform ot = opponent.transform;
         Card card = opponentChoice.getComponent(Card.class);
         card.setOpponentSelected();
@@ -150,25 +195,47 @@ public class GamePlayScene extends Scene {
                 ot.getY() - card.getRealHeight());
 
         pickedCards.removeValue(opponentChoice, true);
+        revealChoices();
+    }
+
+    private void revealChoices() {
+        // Clear all the randomly picked cards from the scene
+        for (GameObject card : pickedCards)
+            removeGameObject(card);
+
+        // Reveal the opponent's card
+        Card card = opponentChoice.getComponent(Card.class);
+        card.setRevealed(true);
+
+        Transform ot = opponent.transform;
+        opponentChoice.transform.setPosition(ot.getX() + (ot.getWidth() - card.getRealWidth())/2f,
+                ot.getY() - card.getRealHeight());
     }
 
     private GameObject getMaximumPick() {
         int max = 0;
         GameObject currentCard = pickedCards.first();
         for (GameObject card : pickedCards) {
-            if (card.getComponent(Card.class).number > max)
+            int number = card.getComponent(Card.class).number;
+            if (number > max) {
                 currentCard = card;
+                max = number;
+            }
         }
 
         return currentCard;
     }
 
     private GameObject getMinimumPick() {
-        int min = 0;
         GameObject currentCard = pickedCards.first();
+        int min = currentCard.getComponent(Card.class).number;
+
         for (GameObject card : pickedCards) {
-            if (card.getComponent(Card.class).number < min)
+            int number = card.getComponent(Card.class).number;
+            if (number < min) {
                 currentCard = card;
+                min = number;
+            }
         }
 
         return currentCard;
@@ -186,7 +253,7 @@ public class GamePlayScene extends Scene {
         @Override
         public void onTouch(String mappingName, TouchEventData touchEventData) {
             for (GameObject card : pickedCards) {
-                if (card.getComponent(Card.class).isTouched(touchEventData.touchX, touchEventData.touchY)) {
+                if (card.getHostScene() != null && card.getComponent(Card.class).isTouched(touchEventData.touchX, touchEventData.touchY)) {
                     userChoice = card;
                     cardSelected();
                     break;

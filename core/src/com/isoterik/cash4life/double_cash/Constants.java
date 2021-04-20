@@ -7,4 +7,6 @@ public final class Constants {
     public static final int GUI_MAX_HEIGHT = 1080;
 
     public static final int MAX_CARDS = 9;
+
+    public static final float WINNING_CHANCE = 0.3f;
 }
