@@ -3,10 +3,14 @@ package com.isoterik.cash4life.double_cash.scenes;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.isoterik.cash4life.double_cash.Constants;
+import com.isoterik.cash4life.double_cash.components.Animator;
 import com.isoterik.cash4life.double_cash.components.Card;
 import com.isoterik.mgdx.GameObject;
 import com.isoterik.mgdx.MinGdx;
@@ -32,6 +36,7 @@ public class GamePlayScene extends Scene {
     private enum Turn { USER, OPPONENT }
 
     private GameType gameType = GameType.HIGHER;
+    private Turn turn;
     private boolean canPlay = false;
 
     public GamePlayScene() {
@@ -133,7 +138,13 @@ public class GamePlayScene extends Scene {
             GameObject card = pickedCards.get(i);
             float t = middleIndex - i;
             float x = mx - (getRealWidth(card) * t) - spacing * t;
-            card.transform.setPosition(x, my);
+
+            Animator animator = new Animator();
+            animator.getActor().addAction(Actions.moveTo(worldUnits.toPixels(x), worldUnits.toPixels(my),
+                    1f, Interpolation.pow5Out));
+
+            card.transform.setPosition(mx, my);
+            card.addComponent(animator);
             addGameObject(card);
         }
 
@@ -141,7 +152,13 @@ public class GamePlayScene extends Scene {
             GameObject card = pickedCards.get(i);
             float t = i - middleIndex;
             float x = mx + (getRealWidth(card) * t) + spacing * t;
-            card.transform.setPosition(x, my);
+
+            Animator animator = new Animator();
+            animator.getActor().addAction(Actions.moveTo(worldUnits.toPixels(x), worldUnits.toPixels(my),
+                    1f, Interpolation.pow5Out));
+
+            card.transform.setPosition(mx, my);
+            card.addComponent(animator);
             addGameObject(card);
         }
     }
