@@ -3,7 +3,6 @@ package com.isoterik.cash4life.double_cash.scenes;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.isoterik.cash4life.double_cash.Constants;
@@ -48,9 +47,9 @@ public class GamePlayScene extends Scene {
 
         opponent = newSpriteObject(minGdx.assets.regionForTexture("images/opponent.png"));
         Transform opponentTransform = opponent.transform;
-        opponentTransform.setScale(1, 0.8f);
+        opponentTransform.setSize(opponentTransform.getWidth(), opponentTransform.getHeight() * 0.8f);
         opponentTransform.setPosition((tableTransform.getX() + tableTransform.getWidth()/2f - worldUnits.toWorldUnit(180)),
-                tableTransform.getY() + tableTransform.getHeight() - worldUnits.toWorldUnit(100));
+                tableTransform.getY() + tableTransform.getHeight() - worldUnits.toWorldUnit(70));
         addGameObject(opponent);
 
         cards = new Array<>();
@@ -93,7 +92,7 @@ public class GamePlayScene extends Scene {
         cards.shuffle();
         pickedCards.clear();
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < Constants.MAX_CARDS; i++)
             pickedCards.add(cards.get(i));
     }
 
@@ -105,7 +104,8 @@ public class GamePlayScene extends Scene {
         pickRandomCards();
 
         // Calculate the position of the middle card
-        GameObject middle = pickedCards.get(2);
+        int middleIndex = Constants.MAX_CARDS/2;
+        GameObject middle = pickedCards.get(middleIndex);
         float mx = (table.transform.getX() + table.transform.getWidth()/2f) - middle.transform.getWidth()/2f;
         float my = (table.transform.getY() + table.transform.getHeight()/2f) - middle.transform.getHeight()/2f;
         middle.transform.setPosition(mx, my);
@@ -113,17 +113,17 @@ public class GamePlayScene extends Scene {
 
         float spacing = worldUnits.toWorldUnit(10);
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < middleIndex; i++) {
             GameObject card = pickedCards.get(i);
-            float t = 2 - i;
+            float t = middleIndex - i;
             float x = mx - (getRealWidth(card) * t) - spacing * t;
             card.transform.setPosition(x, my);
             addGameObject(card);
         }
 
-        for (int i = 3; i < 5; i++) {
+        for (int i = middleIndex + 1; i < Constants.MAX_CARDS; i++) {
             GameObject card = pickedCards.get(i);
-            float t = i - 2;
+            float t = i - middleIndex;
             float x = mx + (getRealWidth(card) * t) + spacing * t;
             card.transform.setPosition(x, my);
             addGameObject(card);

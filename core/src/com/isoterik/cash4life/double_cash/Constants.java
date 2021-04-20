@@ -5,4 +5,6 @@ public final class Constants {
     public static final int GUI_HEIGHT = 720;
     public static final int GUI_MAX_WIDTH = 1920;
     public static final int GUI_MAX_HEIGHT = 1080;
+
+    public static final int MAX_CARDS = 9;
 }
