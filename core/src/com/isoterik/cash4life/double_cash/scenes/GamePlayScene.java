@@ -105,17 +105,22 @@ public class GamePlayScene extends Scene {
     }
 
     private void newGame() {
-        placeCards();
+        pickRandomCards();
+        placeCards(false);
     }
 
-    private void placeCards() {
-        pickRandomCards();
+    private void placeCards(boolean isGameOver) {
+        int max = pickedCards.size;
 
         // Calculate the position of the middle card
-        int middleIndex = Constants.MAX_CARDS/2;
+        int middleIndex = max/2;
         GameObject middle = pickedCards.get(middleIndex);
         float mx = (table.transform.getX() + table.transform.getWidth()/2f) - middle.transform.getWidth()/2f;
         float my = (table.transform.getY() + table.transform.getHeight()/2f) - middle.transform.getHeight()/2f;
+
+        if (isGameOver)
+            my -= worldUnits.toWorldUnit(30);
+
         middle.transform.setPosition(mx, my);
         addGameObject(middle);
 
@@ -129,7 +134,7 @@ public class GamePlayScene extends Scene {
             addGameObject(card);
         }
 
-        for (int i = middleIndex + 1; i < Constants.MAX_CARDS; i++) {
+        for (int i = middleIndex + 1; i < max; i++) {
             GameObject card = pickedCards.get(i);
             float t = i - middleIndex;
             float x = mx + (getRealWidth(card) * t) + spacing * t;
@@ -199,9 +204,10 @@ public class GamePlayScene extends Scene {
     }
 
     private void revealChoices() {
-        // Clear all the randomly picked cards from the scene
+        // Reveal and resize the remaining cards
         for (GameObject card : pickedCards)
-            removeGameObject(card);
+            card.getComponent(Card.class).setGameOverRevealed();
+        placeCards(true);
 
         // Reveal the opponent's card
         Card card = opponentChoice.getComponent(Card.class);

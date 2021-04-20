@@ -11,6 +11,7 @@ import com.isoterik.mgdx.m2d.components.SpriteRenderer;
 
 public class Card extends Component {
     public static float HIDDEN_SCALE = 0.7f;
+    public static float GAME_OVER_SCALE = 0.7f;
     public static float OPPONENT_SELECTED_SCALE = 0.5f;
 
     public final int number;
@@ -41,6 +42,15 @@ public class Card extends Component {
             spriteRenderer.setSprite(cardBackSprite);
             realSize.scl(HIDDEN_SCALE);
         }
+        gameObject.transform.setSize(realSize.x, realSize.y);
+    }
+
+    public void setGameOverRevealed() {
+        SpriteRenderer spriteRenderer = getComponent(SpriteRenderer.class);
+        spriteRenderer.setSprite(cardSprite);
+
+        Vector2 realSize = scene.getMainCamera().getWorldUnits().toWorldUnit(cardSprite);
+        realSize.scl(GAME_OVER_SCALE);
         gameObject.transform.setSize(realSize.x, realSize.y);
     }
 
