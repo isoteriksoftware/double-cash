@@ -31,9 +31,13 @@ public class Card extends Component {
         setRevealed(false);
     }
 
+    public Vector2 getRealSize() {
+        return scene.getMainCamera().getWorldUnits().toWorldUnit(cardSprite);
+    }
+
     public void setRevealed(boolean isRevealed) {
         SpriteRenderer spriteRenderer = getComponent(SpriteRenderer.class);
-        Vector2 realSize = scene.getMainCamera().getWorldUnits().toWorldUnit(cardSprite);
+        Vector2 realSize = getRealSize();
 
         if (isRevealed) {
             spriteRenderer.setSprite(cardSprite);
@@ -49,7 +53,7 @@ public class Card extends Component {
         SpriteRenderer spriteRenderer = getComponent(SpriteRenderer.class);
         spriteRenderer.setSprite(cardSprite);
 
-        Vector2 realSize = scene.getMainCamera().getWorldUnits().toWorldUnit(cardSprite);
+        Vector2 realSize = getRealSize();
         realSize.scl(GAME_OVER_SCALE);
         gameObject.transform.setSize(realSize.x, realSize.y);
     }

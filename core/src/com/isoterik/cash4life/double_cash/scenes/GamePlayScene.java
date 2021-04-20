@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
@@ -74,7 +76,9 @@ public class GamePlayScene extends Scene {
                 continue;
 
             GameObject card = newSpriteObject("Card", cardBackSprite);
+
             card.addComponent(new Card(region, cardBackSprite, this));
+            card.addComponent(new Animator());
             cards.add(card);
             card.addComponent(new BoxDebugRenderer());
         }
@@ -139,7 +143,7 @@ public class GamePlayScene extends Scene {
             float t = middleIndex - i;
             float x = mx - (getRealWidth(card) * t) - spacing * t;
 
-            Animator animator = new Animator();
+            Animator animator = card.getComponent(Animator.class);
             animator.getActor().addAction(Actions.moveTo(worldUnits.toPixels(x), worldUnits.toPixels(my),
                     1f, Interpolation.pow5Out));
 
@@ -153,7 +157,7 @@ public class GamePlayScene extends Scene {
             float t = i - middleIndex;
             float x = mx + (getRealWidth(card) * t) + spacing * t;
 
-            Animator animator = new Animator();
+            Animator animator = card.getComponent(Animator.class);
             animator.getActor().addAction(Actions.moveTo(worldUnits.toPixels(x), worldUnits.toPixels(my),
                     1f, Interpolation.pow5Out));
 
@@ -167,10 +171,24 @@ public class GamePlayScene extends Scene {
         canPlay = false;
 
         Card card = userChoice.getComponent(Card.class);
-        card.setRevealed(true);
+        float x = userChoice.transform.getX();
+        float y = userChoice.transform.getY();
+
         placeInCenterOf(userChoice, table);
         userChoice.transform.position.y = worldUnits.toWorldUnit(10);
 
+        Vector2 realSize = card.getRealSize();
+
+        Actor actor = userChoice.getComponent(Animator.class).getActor();
+        actor.clearActions();
+
+        Action action1 = Actions.moveTo(worldUnits.toPixels(userChoice.transform.getX()),
+                worldUnits.toPixels(userChoice.transform.getY()), .7f, Interpolation.pow5Out);
+
+        actor.setSize(worldUnits.toPixels(realSize.x), worldUnits.toPixels(realSize.y));
+        actor.addAction(Actions.sequence(action1, Actions.run(() -> card.setRevealed(true))));
+
+        userChoice.transform.setPosition(x, y);
         pickedCards.removeValue(userChoice, true);
         playForOpponent();
     }
@@ -218,12 +236,25 @@ public class GamePlayScene extends Scene {
         Transform ot = opponent.transform;
         Card card = opponentChoice.getComponent(Card.class);
         card.setOpponentSelected();
+        float x = opponentChoice.transform.getX();
+        float y = opponentChoice.transform.getY();
 
         opponentChoice.transform.setPosition(ot.getX() + (ot.getWidth() - card.getRealWidth())/2f,
                 ot.getY() - card.getRealHeight());
 
+        Actor actor = opponentChoice.getComponent(Animator.class).getActor();
+        actor.clearActions();
+
+        Action action1 = Actions.moveTo(worldUnits.toPixels(opponentChoice.transform.getX()),
+                worldUnits.toPixels(opponentChoice.transform.getY()), .7f, Interpolation.pow5Out);
+
+        actor.setSize(worldUnits.toPixels(opponentChoice.transform.getWidth()),
+                worldUnits.toPixels(opponentChoice.transform.getHeight()));
+        actor.addAction(Actions.sequence(action1, Actions.run(this::revealChoices)));
+
+        opponentChoice.transform.setPosition(x, y);
+
         pickedCards.removeValue(opponentChoice, true);
-        revealChoices();
     }
 
     private void revealChoices() {
@@ -239,6 +270,12 @@ public class GamePlayScene extends Scene {
         Transform ot = opponent.transform;
         opponentChoice.transform.setPosition(ot.getX() + (ot.getWidth() - card.getRealWidth())/2f,
                 ot.getY() - card.getRealHeight());
+
+        Actor actor = opponentChoice.getComponent(Animator.class).getActor();
+        actor.setPosition(worldUnits.toPixels(opponentChoice.transform.getX()),
+                worldUnits.toPixels(opponentChoice.transform.getY()));
+        actor.setSize(worldUnits.toPixels(opponentChoice.transform.getWidth()),
+                worldUnits.toPixels(opponentChoice.transform.getHeight()));
     }
 
     private GameObject getMaximumPick() {
