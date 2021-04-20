@@ -29,8 +29,10 @@ public class GamePlayScene extends Scene {
     private GameObject userChoice, opponentChoice;
 
     private enum GameType { HIGHER, LOWER }
+    private enum Turn { USER, OPPONENT }
 
     private GameType gameType = GameType.HIGHER;
+    private boolean canPlay = false;
 
     public GamePlayScene() {
         minGdx = MinGdx.instance();
@@ -100,13 +102,14 @@ public class GamePlayScene extends Scene {
         for (int i = 0; i < Constants.MAX_CARDS; i++)
             pickedCards.add(cards.get(i));
 
-        for (GameObject card : pickedCards)
-            System.out.print(card.getComponent(Card.class).number + " ");
+//        for (GameObject card : pickedCards)
+//            System.out.print(card.getComponent(Card.class).number + " ");
     }
 
     private void newGame() {
         pickRandomCards();
         placeCards(false);
+        canPlay = true;
     }
 
     private void placeCards(boolean isGameOver) {
@@ -144,6 +147,8 @@ public class GamePlayScene extends Scene {
     }
 
     private void cardSelected() {
+        canPlay = false;
+
         Card card = userChoice.getComponent(Card.class);
         card.setRevealed(true);
         placeInCenterOf(userChoice, table);
@@ -155,15 +160,16 @@ public class GamePlayScene extends Scene {
 
     private void playForOpponent() {
         opponentChoice = pickedCards.random();
-        System.out.println("Initial choice: " + opponentChoice.getComponent(Card.class).number);
-        System.out.println("Max choice: " + getMaximumPick().getComponent(Card.class).number);
-        System.out.println("Min choice: " + getMinimumPick().getComponent(Card.class).number);
+//        System.out.println("Initial choice: " + opponentChoice.getComponent(Card.class).number);
+//        System.out.println("Max choice: " + getMaximumPick().getComponent(Card.class).number);
+//        System.out.println("Min choice: " + getMinimumPick().getComponent(Card.class).number);
 
         // Get the user chosen number
         int userNumber = userChoice.getComponent(Card.class).number;
 
         if (MathUtils.randomBoolean(Constants.WINNING_CHANCE)) {
-            System.out.println("User to win");
+            //System.out.println("User to win");
+
             // Make sure the user wins
             if (gameType == GameType.HIGHER)
                 opponentChoice = getMinimumPick();
@@ -258,6 +264,9 @@ public class GamePlayScene extends Scene {
     public class CardClickListener implements ITouchListener {
         @Override
         public void onTouch(String mappingName, TouchEventData touchEventData) {
+            if (!canPlay)
+                return;
+
             for (GameObject card : pickedCards) {
                 if (card.getHostScene() != null && card.getComponent(Card.class).isTouched(touchEventData.touchX, touchEventData.touchY)) {
                     userChoice = card;
