@@ -157,8 +157,6 @@ public class GamePlayScene extends Scene {
             card.transform.setPosition(mx, my);
             addGameObject(card);
         }
-
-        System.out.println(animationCanvas.getCamera().viewportWidth);
     }
 
     private void cardSelected() {
@@ -169,7 +167,7 @@ public class GamePlayScene extends Scene {
         float y = userChoice.transform.getY();
 
         placeInCenterOf(userChoice, table);
-        userChoice.transform.position.y = worldUnits.toWorldUnit(10);
+        userChoice.transform.setPosition(userChoice.transform().getX(), worldUnits.toWorldUnit(10));
 
         Vector2 realSize = card.getRealSize();
 
