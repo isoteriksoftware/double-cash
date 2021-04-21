@@ -12,12 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.isoterik.cash4life.double_cash.Constants;
-import com.isoterik.cash4life.double_cash.components.Animator;
 import com.isoterik.cash4life.double_cash.components.Card;
-import com.isoterik.mgdx.GameObject;
-import com.isoterik.mgdx.MinGdx;
-import com.isoterik.mgdx.Scene;
-import com.isoterik.mgdx.Transform;
+import com.isoterik.mgdx.*;
 import com.isoterik.mgdx.input.ITouchListener;
 import com.isoterik.mgdx.input.TouchEventData;
 import com.isoterik.mgdx.input.TouchTrigger;
@@ -28,11 +24,11 @@ public class GamePlayScene extends Scene {
     private MinGdx minGdx;
     private WorldUnits worldUnits;
 
-    private Array<GameObject> cards, pickedCards;
+    private Array<ActorGameObject> cards, pickedCards;
     private final TextureRegion cardBackSprite;
 
     private final GameObject table, opponent;
-    private GameObject userChoice, opponentChoice;
+    private ActorGameObject userChoice, opponentChoice;
 
     private enum GameType { HIGHER, LOWER }
     private enum Turn { USER, OPPONENT }
@@ -75,10 +71,9 @@ public class GamePlayScene extends Scene {
             if (region.name.startsWith("shirt"))
                 continue;
 
-            GameObject card = newSpriteObject("Card", cardBackSprite);
+            ActorGameObject card = newActorSpriteObject("Card", cardBackSprite);
 
             card.addComponent(new Card(region, cardBackSprite, this));
-            card.addComponent(new Animator());
             cards.add(card);
             card.addComponent(new BoxDebugRenderer());
         }
@@ -94,6 +89,7 @@ public class GamePlayScene extends Scene {
         mainCamera.setup(new ExtendViewport(worldUnits.getWorldWidth(), worldUnits.getWorldHeight(),
                 worldUnits.getWorldWidth(), worldUnits.getWorldHeight(),
                 mainCamera.getCamera()), worldUnits);
+        setupAnimationCanvas(mainCamera.getViewport());
     }
 
     private void placeInCenterOf(GameObject gameObject, GameObject host) {
@@ -126,7 +122,7 @@ public class GamePlayScene extends Scene {
 
         // Calculate the position of the middle card
         int middleIndex = max/2;
-        GameObject middle = pickedCards.get(middleIndex);
+        ActorGameObject middle = pickedCards.get(middleIndex);
         float mx = (table.transform.getX() + table.transform.getWidth()/2f) - middle.transform.getWidth()/2f;
         float my = (table.transform.getY() + table.transform.getHeight()/2f) - middle.transform.getHeight()/2f;
 
@@ -139,32 +135,30 @@ public class GamePlayScene extends Scene {
         float spacing = worldUnits.toWorldUnit(10);
 
         for (int i = 0; i < middleIndex; i++) {
-            GameObject card = pickedCards.get(i);
+            ActorGameObject card = pickedCards.get(i);
             float t = middleIndex - i;
             float x = mx - (getRealWidth(card) * t) - spacing * t;
 
-            Animator animator = card.getComponent(Animator.class);
-            animator.getActor().addAction(Actions.moveTo(worldUnits.toPixels(x), worldUnits.toPixels(my),
+            card.actorTransform.actor.addAction(Actions.moveTo(x, my,
                     1f, Interpolation.pow5Out));
 
             card.transform.setPosition(mx, my);
-            card.addComponent(animator);
             addGameObject(card);
         }
 
         for (int i = middleIndex + 1; i < max; i++) {
-            GameObject card = pickedCards.get(i);
+            ActorGameObject card = pickedCards.get(i);
             float t = i - middleIndex;
             float x = mx + (getRealWidth(card) * t) + spacing * t;
 
-            Animator animator = card.getComponent(Animator.class);
-            animator.getActor().addAction(Actions.moveTo(worldUnits.toPixels(x), worldUnits.toPixels(my),
+            card.actorTransform.actor.addAction(Actions.moveTo(x, my,
                     1f, Interpolation.pow5Out));
 
             card.transform.setPosition(mx, my);
-            card.addComponent(animator);
             addGameObject(card);
         }
+
+        System.out.println(animationCanvas.getCamera().viewportWidth);
     }
 
     private void cardSelected() {
@@ -179,13 +173,13 @@ public class GamePlayScene extends Scene {
 
         Vector2 realSize = card.getRealSize();
 
-        Actor actor = userChoice.getComponent(Animator.class).getActor();
+        Actor actor = userChoice.actorTransform.actor;
         actor.clearActions();
 
-        Action action1 = Actions.moveTo(worldUnits.toPixels(userChoice.transform.getX()),
-                worldUnits.toPixels(userChoice.transform.getY()), .7f, Interpolation.pow5Out);
+        Action action1 = Actions.moveTo(userChoice.transform.getX(), userChoice.transform.getY(),
+                .7f, Interpolation.pow5Out);
 
-        actor.setSize(worldUnits.toPixels(realSize.x), worldUnits.toPixels(realSize.y));
+        actor.setSize(realSize.x, realSize.y);
         actor.addAction(Actions.sequence(action1, Actions.run(() -> card.setRevealed(true))));
 
         userChoice.transform.setPosition(x, y);
@@ -242,14 +236,13 @@ public class GamePlayScene extends Scene {
         opponentChoice.transform.setPosition(ot.getX() + (ot.getWidth() - card.getRealWidth())/2f,
                 ot.getY() - card.getRealHeight());
 
-        Actor actor = opponentChoice.getComponent(Animator.class).getActor();
+        Actor actor = opponentChoice.actorTransform.actor;
         actor.clearActions();
 
-        Action action1 = Actions.moveTo(worldUnits.toPixels(opponentChoice.transform.getX()),
-                worldUnits.toPixels(opponentChoice.transform.getY()), .7f, Interpolation.pow5Out);
+        Action action1 = Actions.moveTo(opponentChoice.transform.getX(), opponentChoice.transform.getY(),
+                .7f, Interpolation.pow5Out);
 
-        actor.setSize(worldUnits.toPixels(opponentChoice.transform.getWidth()),
-                worldUnits.toPixels(opponentChoice.transform.getHeight()));
+        actor.setSize(opponentChoice.transform.getWidth(), opponentChoice.transform.getHeight());
         actor.addAction(Actions.sequence(action1, Actions.run(this::revealChoices)));
 
         opponentChoice.transform.setPosition(x, y);
@@ -271,17 +264,15 @@ public class GamePlayScene extends Scene {
         opponentChoice.transform.setPosition(ot.getX() + (ot.getWidth() - card.getRealWidth())/2f,
                 ot.getY() - card.getRealHeight());
 
-        Actor actor = opponentChoice.getComponent(Animator.class).getActor();
-        actor.setPosition(worldUnits.toPixels(opponentChoice.transform.getX()),
-                worldUnits.toPixels(opponentChoice.transform.getY()));
-        actor.setSize(worldUnits.toPixels(opponentChoice.transform.getWidth()),
-                worldUnits.toPixels(opponentChoice.transform.getHeight()));
+        Actor actor = opponentChoice.actorTransform.actor;
+        actor.setPosition(opponentChoice.transform.getX(), opponentChoice.transform.getY());
+        actor.setSize(opponentChoice.transform.getWidth(), opponentChoice.transform.getHeight());
     }
 
-    private GameObject getMaximumPick() {
+    private ActorGameObject getMaximumPick() {
         int max = 0;
-        GameObject currentCard = pickedCards.first();
-        for (GameObject card : pickedCards) {
+        ActorGameObject currentCard = pickedCards.first();
+        for (ActorGameObject card : pickedCards) {
             int number = card.getComponent(Card.class).number;
             if (number > max) {
                 currentCard = card;
@@ -292,11 +283,11 @@ public class GamePlayScene extends Scene {
         return currentCard;
     }
 
-    private GameObject getMinimumPick() {
-        GameObject currentCard = pickedCards.first();
+    private ActorGameObject getMinimumPick() {
+        ActorGameObject currentCard = pickedCards.first();
         int min = currentCard.getComponent(Card.class).number;
 
-        for (GameObject card : pickedCards) {
+        for (ActorGameObject card : pickedCards) {
             int number = card.getComponent(Card.class).number;
             if (number < min) {
                 currentCard = card;
@@ -321,7 +312,7 @@ public class GamePlayScene extends Scene {
             if (!canPlay)
                 return;
 
-            for (GameObject card : pickedCards) {
+            for (ActorGameObject card : pickedCards) {
                 if (card.getHostScene() != null && card.getComponent(Card.class).isTouched(touchEventData.touchX, touchEventData.touchY)) {
                     userChoice = card;
                     cardSelected();
