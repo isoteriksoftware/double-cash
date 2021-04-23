@@ -8,16 +8,20 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.isoterik.cash4life.double_cash.Constants;
 import com.isoterik.cash4life.double_cash.components.Card;
+import com.isoterik.cash4life.double_cash.utils.UIHelper;
 import com.isoterik.mgdx.*;
 import com.isoterik.mgdx.input.ITouchListener;
 import com.isoterik.mgdx.input.TouchEventData;
 import com.isoterik.mgdx.input.TouchTrigger;
 import com.isoterik.mgdx.m2d.components.debug.BoxDebugRenderer;
+import com.isoterik.mgdx.ui.ActorAnimation;
 import com.isoterik.mgdx.utils.WorldUnits;
 
 public class GamePlayScene extends Scene {
@@ -90,6 +94,10 @@ public class GamePlayScene extends Scene {
                 worldUnits.getWorldWidth(), worldUnits.getWorldHeight(),
                 mainCamera.getCamera()), worldUnits);
         setupAnimationCanvas(mainCamera.getViewport());
+
+        //setupCanvas(new StretchViewport(Constants.GUI_WIDTH, Constants.GUI_HEIGHT));
+        canvas = new Stage(new StretchViewport(Constants.GUI_WIDTH, Constants.GUI_HEIGHT));
+        ActorAnimation.instance().setup(Constants.GUI_WIDTH, Constants.GUI_HEIGHT);
     }
 
     private void placeInCenterOf(GameObject gameObject, GameObject host) {
@@ -115,6 +123,8 @@ public class GamePlayScene extends Scene {
         pickRandomCards();
         placeCards(false);
         canPlay = true;
+
+        UIHelper.showYourTurn(canvas);
     }
 
     private void placeCards(boolean isGameOver) {
