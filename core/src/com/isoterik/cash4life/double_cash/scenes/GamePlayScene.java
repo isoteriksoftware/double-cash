@@ -176,9 +176,12 @@ public class GamePlayScene extends Scene {
 
         Action action1 = Actions.moveTo(userChoice.transform.getX(), userChoice.transform.getY(),
                 .7f, Interpolation.pow5Out);
+        Action action2 = Actions.scaleTo(1f, 1f, .7f, Interpolation.pow5Out);
 
         actor.setSize(realSize.x, realSize.y);
-        actor.addAction(Actions.sequence(action1, Actions.run(() -> card.setRevealed(true))));
+        actor.setScale(Card.HIDDEN_SCALE);
+        actor.setOrigin(realSize.x / 2f, realSize.y / 2f);
+        actor.addAction(Actions.sequence(action1, Actions.run(() -> card.setRevealed(true)), action2));
 
         userChoice.transform.setPosition(x, y);
         pickedCards.removeValue(userChoice, true);
