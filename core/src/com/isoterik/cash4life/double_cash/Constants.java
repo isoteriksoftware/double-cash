@@ -10,4 +10,5 @@ public final class Constants {
     public static final float WINNING_CHANCE = 0.3f;
 
     public static final String UI_ATLAS = "spritesheets/ui-elements.atlas";
+    public static final String FONT = "fonts/main.fnt";
 }

@@ -1,6 +1,7 @@
 package com.isoterik.cash4life.double_cash;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.isoterik.cash4life.double_cash.scenes.GamePlayScene;
 import com.isoterik.mgdx.MinGdxGame;
 import com.isoterik.mgdx.Scene;
@@ -23,6 +24,7 @@ public class DoubleCash extends MinGdxGame {
 		minGdx.assets.enqueueFolderContents("images", Texture.class);
 		minGdx.assets.enqueueAtlas("spritesheets/cards.atlas");
 		minGdx.assets.enqueueAtlas(Constants.UI_ATLAS);
+		minGdx.assets.enqueueAsset(Constants.FONT, BitmapFont.class);
 		minGdx.assets.loadAssetsNow();
 	}
 }

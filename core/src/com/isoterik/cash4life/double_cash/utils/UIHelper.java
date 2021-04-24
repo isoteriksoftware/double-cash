@@ -17,13 +17,17 @@ import com.isoterik.mgdx.io.GameAssetsLoader;
 import com.isoterik.mgdx.ui.ActorAnimation;
 
 public final class UIHelper {
-    public static TextureAtlas getAtlas() {
-        return MinGdx.instance().assets.getAtlas(Constants.UI_ATLAS);
+    private TextureAtlas atlas;
+    private Stage canvas;
+    private GameAssetsLoader assetsLoader;
+
+    public UIHelper(Stage canvas) {
+        this.canvas = canvas;
+        this.assetsLoader = MinGdx.instance().assets;
+        this.atlas = assetsLoader.getAtlas(Constants.UI_ATLAS);
     }
 
-    public static void showYourTurn(Stage canvas) {
-        GameAssetsLoader assetsLoader = MinGdx.instance().assets;
-
+    public void showYourTurn() {
         Image image = new Image(assetsLoader.regionForTexture("images/your_turn.png", true));
         image.setOrigin(image.getWidth()/2f, image.getHeight()/2f);
         ActorAnimation.instance().grow(image, .5f, Interpolation.swingOut);
@@ -38,7 +42,7 @@ public final class UIHelper {
 
     }
 
-    public static void showOpponentTurn(Stage canvas) {
+    public void showOpponentTurn() {
         GameAssetsLoader assetsLoader = MinGdx.instance().assets;
 
         Image image = new Image(assetsLoader.regionForTexture("images/opponent_turn.png", true));
@@ -55,14 +59,14 @@ public final class UIHelper {
 
     }
 
-    public static Window newWindow() {
+    public Window newWindow() {
         GameAssetsLoader assetsLoader = MinGdx.instance().assets;
 
         Window.WindowStyle style = new Window.WindowStyle();
         style.titleFont = new BitmapFont();
         style.stageBackground = ((TextureRegionDrawable)assetsLoader.drawableForTexture("images/white.png"))
                 .tint(new Color(0, 0, 0, .5f));
-        style.background = new NinePatchDrawable(getAtlas().createPatch("window"));
+        style.background = new NinePatchDrawable(atlas.createPatch("window"));
 
         Window window = new Window("", style);
         window.setKeepWithinStage(false);
@@ -71,7 +75,7 @@ public final class UIHelper {
         return window;
     }
 
-    public static void showStakeDialog(Stage canvas) {
+    public void showStakeDialog(Stage canvas) {
         Window window = newWindow();
         window.setSize(700, 400);
         canvas.addActor(window);

@@ -41,6 +41,8 @@ public class GamePlayScene extends Scene {
     private Turn turn;
     private boolean canPlay = false;
 
+    private UIHelper uiHelper;
+
     public GamePlayScene() {
         minGdx = MinGdx.instance();
         setupCamera();
@@ -98,6 +100,7 @@ public class GamePlayScene extends Scene {
         //setupCanvas(new StretchViewport(Constants.GUI_WIDTH, Constants.GUI_HEIGHT));
         canvas = new Stage(new StretchViewport(Constants.GUI_WIDTH, Constants.GUI_HEIGHT));
         ActorAnimation.instance().setup(Constants.GUI_WIDTH, Constants.GUI_HEIGHT);
+        uiHelper = new UIHelper(canvas);
     }
 
     private void placeInCenterOf(GameObject gameObject, GameObject host) {
@@ -123,7 +126,7 @@ public class GamePlayScene extends Scene {
         pickRandomCards();
         placeCards(false);
 
-        UIHelper.showStakeDialog(canvas);
+        uiHelper.showStakeDialog(canvas);
 
         if (MathUtils.randomBoolean())
             turn = Turn.USER;
