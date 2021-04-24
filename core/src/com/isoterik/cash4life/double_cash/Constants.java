@@ -9,6 +9,5 @@ public final class Constants {
     public static final int MAX_CARDS = 9;
     public static final float WINNING_CHANCE = 0.3f;
 
-    public static final String UI_ATLAS = "spritesheets/ui-elements.atlas";
-    public static final String FONT = "fonts/main.fnt";
+    public static final String SKIN = "skin/ui.json";
 }

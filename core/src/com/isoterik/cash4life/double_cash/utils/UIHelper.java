@@ -6,25 +6,24 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.isoterik.cash4life.double_cash.Constants;
 import com.isoterik.mgdx.MinGdx;
 import com.isoterik.mgdx.io.GameAssetsLoader;
 import com.isoterik.mgdx.ui.ActorAnimation;
 
 public final class UIHelper {
-    private TextureAtlas atlas;
     private Stage canvas;
     private GameAssetsLoader assetsLoader;
+    private Skin skin;
 
     public UIHelper(Stage canvas) {
         this.canvas = canvas;
         this.assetsLoader = MinGdx.instance().assets;
-        this.atlas = assetsLoader.getAtlas(Constants.UI_ATLAS);
+        this.skin = assetsLoader.getSkin(Constants.SKIN);
     }
 
     public void showYourTurn() {
@@ -60,15 +59,7 @@ public final class UIHelper {
     }
 
     public Window newWindow() {
-        GameAssetsLoader assetsLoader = MinGdx.instance().assets;
-
-        Window.WindowStyle style = new Window.WindowStyle();
-        style.titleFont = new BitmapFont();
-        style.stageBackground = ((TextureRegionDrawable)assetsLoader.drawableForTexture("images/white.png"))
-                .tint(new Color(0, 0, 0, .5f));
-        style.background = new NinePatchDrawable(atlas.createPatch("window"));
-
-        Window window = new Window("", style);
+        Window window = new Window("", skin);
         window.setKeepWithinStage(false);
         window.setModal(true);
 
@@ -77,9 +68,14 @@ public final class UIHelper {
 
     public void showStakeDialog(Stage canvas) {
         Window window = newWindow();
+
+        Label label = new Label("What's your stake?", skin);
+        label.setAlignment(Align.center);
+
+        window.add(label).expandX().fillX();
+
         window.setSize(700, 400);
         canvas.addActor(window);
-
         centerActor(window, canvas);
         ActorAnimation.instance().slideIn(window, ActorAnimation.DOWN, 1f, Interpolation.swingOut);
     }

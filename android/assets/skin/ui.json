@@ -1,0 +1,43 @@
+{
+BitmapFont: {
+	main: {
+		file: main.fnt
+	}
+}
+Color: {
+	white: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+}
+TintedDrawable: {
+	translucent: {
+		name: white
+		color: {
+			r: 0
+			g: 0
+			b: 0
+			a: 0.49019608
+		}
+	}
+}
+LabelStyle: {
+	default: {
+		font: main
+	}
+}
+TextTooltipStyle: {
+	default: {
+		label: default
+	}
+}
+WindowStyle: {
+	default: {
+		background: window
+		titleFont: main
+		stageBackground: translucent
+	}
+}
+}
