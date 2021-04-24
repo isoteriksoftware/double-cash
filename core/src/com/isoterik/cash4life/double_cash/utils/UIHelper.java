@@ -2,18 +2,25 @@ package com.isoterik.cash4life.double_cash.utils;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.isoterik.cash4life.double_cash.Constants;
 import com.isoterik.mgdx.MinGdx;
 import com.isoterik.mgdx.io.GameAssetsLoader;
 import com.isoterik.mgdx.ui.ActorAnimation;
 
 public final class UIHelper {
+    public static TextureAtlas getAtlas() {
+        return MinGdx.instance().assets.getAtlas(Constants.UI_ATLAS);
+    }
+
     public static void showYourTurn(Stage canvas) {
         GameAssetsLoader assetsLoader = MinGdx.instance().assets;
 
@@ -55,7 +62,7 @@ public final class UIHelper {
         style.titleFont = new BitmapFont();
         style.stageBackground = ((TextureRegionDrawable)assetsLoader.drawableForTexture("images/white.png"))
                 .tint(new Color(0, 0, 0, .5f));
-        style.background = assetsLoader.drawableForTexture("images/window.png", true);
+        style.background = new NinePatchDrawable(getAtlas().createPatch("window"));
 
         Window window = new Window("", style);
         window.setKeepWithinStage(false);
@@ -66,7 +73,7 @@ public final class UIHelper {
 
     public static void showStakeDialog(Stage canvas) {
         Window window = newWindow();
-        window.setSize(300, 300);
+        window.setSize(700, 400);
         canvas.addActor(window);
 
         centerActor(window, canvas);

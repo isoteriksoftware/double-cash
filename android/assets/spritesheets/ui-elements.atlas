@@ -1,0 +1,15 @@
+
+ui-elements.png
+size: 1024, 256
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+window
+  rotate: false
+  xy: 2, 2
+  size: 723, 245
+  split: 54, 47, 89, 97
+  pad: -1, -1, 91, 0
+  orig: 723, 245
+  offset: 0, 0
+  index: -1

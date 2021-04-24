@@ -22,6 +22,7 @@ public class DoubleCash extends MinGdxGame {
 	private void loadAssets() {
 		minGdx.assets.enqueueFolderContents("images", Texture.class);
 		minGdx.assets.enqueueAtlas("spritesheets/cards.atlas");
+		minGdx.assets.enqueueAtlas(Constants.UI_ATLAS);
 		minGdx.assets.loadAssetsNow();
 	}
 }
