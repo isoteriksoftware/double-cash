@@ -27,6 +27,23 @@ public final class UIHelper {
         canvas.addActor(tbl);
 
     }
+
+    public static void showOpponentTurn(Stage canvas) {
+        GameAssetsLoader assetsLoader = MinGdx.instance().assets;
+
+        Image image = new Image(assetsLoader.regionForTexture("images/opponent_turn.png", true));
+        image.setOrigin(image.getWidth()/2f, image.getHeight()/2f);
+        ActorAnimation.instance().grow(image, .5f, Interpolation.swingOut);
+
+        Table tbl = new Table();
+        tbl.setFillParent(true);
+        tbl.setBackground(((TextureRegionDrawable)assetsLoader.drawableForTexture("images/white.png"))
+                .tint(new Color(0, 0, 0, .5f)));
+        tbl.center();
+        tbl.add(image);
+        canvas.addActor(tbl);
+
+    }
 }
 
 

@@ -122,9 +122,19 @@ public class GamePlayScene extends Scene {
     private void newGame() {
         pickRandomCards();
         placeCards(false);
-        canPlay = true;
 
-        UIHelper.showYourTurn(canvas);
+        if (MathUtils.randomBoolean())
+            turn = Turn.USER;
+        else
+            turn = Turn.OPPONENT;
+
+        if (turn == Turn.USER) {
+            UIHelper.showYourTurn(canvas);
+            canPlay = true;
+        }
+        else {
+            UIHelper.showOpponentTurn(canvas);
+        }
     }
 
     private void placeCards(boolean isGameOver) {
