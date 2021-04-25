@@ -70,11 +70,13 @@ public final class UIHelper {
         Window window = newWindow();
 
         Label label = new Label("What's your stake?", skin);
+        label.setFontScale(1.2f);
         label.setAlignment(Align.center);
 
+        window.top().padTop(100);
         window.add(label).expandX().fillX();
 
-        window.setSize(700, 400);
+        window.setSize(500, 400);
         canvas.addActor(window);
         centerActor(window, canvas);
         ActorAnimation.instance().slideIn(window, ActorAnimation.DOWN, 1f, Interpolation.swingOut);
