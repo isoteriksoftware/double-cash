@@ -1,12 +1,16 @@
 package com.isoterik.cash4life.double_cash.utils;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
@@ -62,6 +66,8 @@ public final class UIHelper {
         Window window = new Window("", skin);
         window.setKeepWithinStage(false);
         window.setModal(true);
+        int pad = 40;
+        window.padLeft(pad).padRight(pad).padBottom(pad);
 
         return window;
     }
@@ -69,14 +75,47 @@ public final class UIHelper {
     public void showStakeDialog(Stage canvas) {
         Window window = newWindow();
 
-        Label label = new Label("What's your stake?", skin);
-        label.setFontScale(1.2f);
-        label.setAlignment(Align.center);
+        Label title = new Label("What's your stake?".toUpperCase(), skin, "green");
+        title.setAlignment(Align.center);
 
-        window.top().padTop(100);
-        window.add(label).expandX().fillX();
+        Label amount = new Label("Amount: ", skin, "green24");
+        TextField stake = new TextField("100", skin);
+        stake.clearListeners();
+        stake.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.input.getTextInput(new Input.TextInputListener() {
+                    @Override
+                    public void input(String text) {
+                        try {
+                            Integer.parseInt(text);
+                            stake.setText(text);
+                        } catch (Exception ignored) {}
+                    }
 
-        window.setSize(500, 400);
+                    @Override
+                    public void canceled() {
+
+                    }
+                }, "Enter Stake Amount", stake.getText(), "", Input.OnscreenKeyboardType.NumberPad);
+            }
+        });
+
+        TextButton btnHighest = new TextButton("Highest Card", skin);
+        TextButton btnLowest = new TextButton("Lowest Card", skin);
+
+        window.top().padTop(50);
+        window.add(title).expandX().fillX().left().colspan(2);
+        window.row().padTop(50);
+        window.add(amount).padRight(20).left();
+        window.row().padTop(5);
+        window.add(stake).height(50).expandX().fillX().left();
+        window.row().padTop(30);
+        window.add(btnHighest).expandX().fillX().padRight(30);
+        window.add(btnLowest).expandX().fillX();
+
+        window.pack();
+
         canvas.addActor(window);
         centerActor(window, canvas);
         ActorAnimation.instance().slideIn(window, ActorAnimation.DOWN, 1f, Interpolation.swingOut);

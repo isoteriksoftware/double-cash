@@ -99,6 +99,8 @@ public class GamePlayScene extends Scene {
 
         //setupCanvas(new StretchViewport(Constants.GUI_WIDTH, Constants.GUI_HEIGHT));
         canvas = new Stage(new StretchViewport(Constants.GUI_WIDTH, Constants.GUI_HEIGHT));
+        inputManager.getInputMultiplexer().addProcessor(canvas);
+
         ActorAnimation.instance().setup(Constants.GUI_WIDTH, Constants.GUI_HEIGHT);
         uiHelper = new UIHelper(canvas);
     }

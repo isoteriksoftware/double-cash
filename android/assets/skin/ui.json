@@ -1,15 +1,56 @@
 {
 BitmapFont: {
-	main: {
-		file: main.fnt
+	font16: {
+		file: font.fnt
+	}
+	font24: {
+		file: font24.fnt
+	}
+	font32: {
+		file: font32.fnt
 	}
 }
 Color: {
+	disabled: {
+		r: 0.5366667
+		g: 0.5330889
+		b: 0.5330889
+		a: 1
+	}
+	green: {
+		r: 0.3095999
+		g: 0.54
+		b: 0.40022397
+		a: 1
+	}
+	grey: {
+		r: 0.87
+		g: 0.87
+		b: 0.87
+		a: 1
+	}
 	white: {
 		r: 1
 		g: 1
 		b: 1
 		a: 1
+	}
+	yellowish-green: {
+		r: 0.7429132
+		g: 0.9066667
+		b: 0.31431097
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable: {
+	cursor: {
+		patch: cursor
+		minWidth: 3
+		minHeight: 20
+		leftWidth: 1
+		rightWidth: 0
+		topHeight: 10
+		bottomHeight: 9
 	}
 }
 TintedDrawable: {
@@ -22,10 +63,60 @@ TintedDrawable: {
 			a: 0.49019608
 		}
 	}
+	cursor-green: {
+		name: cursor
+		color: green
+		minWidth: 3
+		minHeight: 70
+	}
 }
 LabelStyle: {
 	default: {
-		font: main
+		font: font32
+	}
+	info: {
+		font: font32
+		background: window-panel
+	}
+	balance: {
+		font: font16
+		background: window-money
+	}
+	green: {
+		parent: default
+		fontColor: green
+	}
+	green16: {
+		parent: green
+		font: font16
+	}
+	green24: {
+		parent: green
+		font: font24
+	}
+	white24: {
+		parent: default
+		font: font24
+	}
+}
+TextButtonStyle: {
+	default: {
+		font: font32
+		fontColor: green
+		downFontColor: yellowish-green
+		disabledFontColor: disabled
+		up: btn-up
+		down: btn-down
+		over: btn-hover
+		disabled: btn-disabled
+	}
+}
+TextFieldStyle: {
+	default: {
+		font: font24
+		fontColor: white
+		background: field
+		cursor: cursor-green
 	}
 }
 TextTooltipStyle: {
@@ -36,7 +127,8 @@ TextTooltipStyle: {
 WindowStyle: {
 	default: {
 		background: window
-		titleFont: main
+		titleFont: font32
+		titleFontColor: green
 		stageBackground: translucent
 	}
 }

@@ -12,7 +12,7 @@ public class DesktopLauncher {
 		config.height = Constants.GUI_HEIGHT;
 		config.forceExit = false;
 		//config.fullscreen = true;
-		config.resizable = false;
+		//config.resizable = false;
 
 		new LwjglApplication(new DoubleCash(), config);
 	}

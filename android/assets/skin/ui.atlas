@@ -4,26 +4,122 @@ size: 1024,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-main
+btn-disabled
   rotate: false
-  xy: 1, 1
-  size: 512, 512
-  orig: 512, 512
+  xy: 509, 790
+  size: 142, 53
+  split: 71, 70, 26, 26
+  orig: 142, 53
   offset: 0, 0
   index: -1
-white
+btn-down
   rotate: false
-  xy: 726, 752
-  size: 8, 8
-  orig: 8, 8
+  xy: 691, 890
+  size: 141, 53
+  split: 70, 70, 26, 26
+  orig: 141, 53
+  offset: 0, 0
+  index: -1
+btn-hover
+  rotate: false
+  xy: 199, 582
+  size: 141, 53
+  split: 70, 70, 26, 26
+  orig: 141, 53
+  offset: 0, 0
+  index: -1
+btn-up
+  rotate: false
+  xy: 1, 364
+  size: 141, 53
+  split: 70, 70, 26, 26
+  orig: 141, 53
+  offset: 0, 0
+  index: -1
+cursor
+  rotate: false
+  xy: 1016, 996
+  size: 2, 20
+  split: 1, 0, 10, 9
+  orig: 2, 20
+  offset: 0, 0
+  index: -1
+field
+  rotate: false
+  xy: 509, 772
+  size: 65, 16
+  split: 2, 2, 3, 3
+  orig: 65, 16
   offset: 0, 0
   index: -1
 window
   rotate: false
-  xy: 1, 515
-  size: 723, 245
-  split: 50, 49, 87, 92
-  pad: 0, 0, 0, 0
-  orig: 723, 245
+  xy: 1, 502
+  size: 196, 166
+  split: 45, 47, 39, 39
+  pad: 98, 97, 83, 82
+  orig: 196, 166
+  offset: 0, 0
+  index: -1
+window-default
+  rotate: false
+  xy: 1, 419
+  size: 179, 81
+  split: 27, 26, 19, 20
+  pad: 89, 89, 40, 40
+  orig: 179, 81
+  offset: 0, 0
+  index: -1
+window-money
+  rotate: false
+  xy: 372, 648
+  size: 67, 20
+  split: 25, 10, 8, 9
+  pad: 27, 10, 10, 9
+  orig: 67, 20
+  offset: 0, 0
+  index: -1
+window-panel
+  rotate: false
+  xy: 199, 637
+  size: 171, 31
+  split: 9, 9, 8, 7
+  orig: 171, 31
+  offset: 0, 0
+  index: -1
+window-plastered
+  rotate: false
+  xy: 509, 845
+  size: 180, 98
+  split: 90, 89, 49, 48
+  orig: 180, 98
+  offset: 0, 0
+  index: -1
+font
+  rotate: false
+  xy: 509, 945
+  size: 505, 71
+  orig: 505, 71
+  offset: 0, 0
+  index: -1
+font24
+  rotate: false
+  xy: 1, 670
+  size: 506, 134
+  orig: 506, 134
+  offset: 0, 0
+  index: -1
+font32
+  rotate: false
+  xy: 1, 806
+  size: 506, 210
+  orig: 506, 210
+  offset: 0, 0
+  index: -1
+white
+  rotate: false
+  xy: 182, 492
+  size: 8, 8
+  orig: 8, 8
   offset: 0, 0
   index: -1
