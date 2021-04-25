@@ -34,14 +34,16 @@ public class GamePlayScene extends Scene {
     private final GameObject table, opponent;
     private ActorGameObject userChoice, opponentChoice;
 
-    private enum GameType { HIGHER, LOWER }
+    public enum GameType { HIGHER, LOWER }
     private enum Turn { USER, OPPONENT }
 
     private GameType gameType = GameType.HIGHER;
     private Turn turn;
+    private int stakeAmount = 0;
     private boolean canPlay = false;
 
     private UIHelper uiHelper;
+    private UIHelper.StakeListener stakeListener;
 
     public GamePlayScene() {
         minGdx = MinGdx.instance();
@@ -103,6 +105,16 @@ public class GamePlayScene extends Scene {
 
         ActorAnimation.instance().setup(Constants.GUI_WIDTH, Constants.GUI_HEIGHT);
         uiHelper = new UIHelper(canvas);
+
+        stakeListener = (gameType, amount) -> {
+            this.gameType = gameType;
+            this.stakeAmount = amount;
+
+            if (MathUtils.randomBoolean())
+                turn = Turn.USER;
+            else
+                turn = Turn.OPPONENT;
+        };
     }
 
     private void placeInCenterOf(GameObject gameObject, GameObject host) {
@@ -128,12 +140,7 @@ public class GamePlayScene extends Scene {
         pickRandomCards();
         placeCards(false);
 
-        uiHelper.showStakeDialog(canvas);
-
-        if (MathUtils.randomBoolean())
-            turn = Turn.USER;
-        else
-            turn = Turn.OPPONENT;
+        uiHelper.showStakeDialog(stakeListener);
     }
 
     private void placeCards(boolean isGameOver) {
