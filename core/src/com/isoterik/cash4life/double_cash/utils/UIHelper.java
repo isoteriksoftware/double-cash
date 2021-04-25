@@ -34,39 +34,56 @@ public final class UIHelper {
     }
 
     public void showYourTurn() {
-        Image image = new Image(assetsLoader.regionForTexture("images/your_turn.png", true));
-        image.setOrigin(image.getWidth()/2f, image.getHeight()/2f);
-        ActorAnimation.instance().grow(image, .5f, Interpolation.swingOut);
+        Label label = new Label("YOUR  TURN", skin, "white64");
+        label.setAlignment(Align.center);
 
-        Table tbl = new Table();
-        tbl.setFillParent(true);
-        tbl.setBackground(((TextureRegionDrawable)assetsLoader.drawableForTexture("images/white.png"))
-                .tint(new Color(0, 0, 0, .5f)));
-        tbl.center();
-        tbl.add(image);
-        canvas.addActor(tbl);
+        Window window = newTypedWindow("info");
+        window.pad(20);
+        window.add(label).padRight(20).padLeft(20);
 
+        window.pack();
+        centerActorOrigin(window);
+        centerActor(window, canvas);
+        canvas.addActor(window);
+
+        ActorAnimation.instance().grow(window, .7f, Interpolation.bounceOut);
+        window.addAction(Actions.delay(1.5f, Actions.run(() -> {
+            ActorAnimation.instance().slideOutThenRemove(window, ActorAnimation.UP, .7f, Interpolation.swingOut);
+        })));
     }
 
-    public void showOpponentTurn() {
-        GameAssetsLoader assetsLoader = MinGdx.instance().assets;
+    public void showOpponentTurn(Runnable onReady) {
+        Label label = new Label("OPPONENT  TURN", skin, "white64");
+        label.setAlignment(Align.center);
 
-        Image image = new Image(assetsLoader.regionForTexture("images/opponent_turn.png", true));
-        image.setOrigin(image.getWidth()/2f, image.getHeight()/2f);
-        ActorAnimation.instance().grow(image, .5f, Interpolation.swingOut);
+        Window window = newTypedWindow("info");
+        window.pad(20);
+        window.add(label).padRight(20).padLeft(20);
 
-        Table tbl = new Table();
-        tbl.setFillParent(true);
-        tbl.setBackground(((TextureRegionDrawable)assetsLoader.drawableForTexture("images/white.png"))
-                .tint(new Color(0, 0, 0, .5f)));
-        tbl.center();
-        tbl.add(image);
-        canvas.addActor(tbl);
+        window.pack();
+        centerActorOrigin(window);
+        centerActor(window, canvas);
+        canvas.addActor(window);
 
+        ActorAnimation.instance().grow(window, .7f, Interpolation.bounceOut);
+        window.addAction(Actions.delay(1.5f, Actions.run(() -> {
+            ActorAnimation.instance().slideOutThenRemove(window, ActorAnimation.UP, .7f, Interpolation.swingOut);
+            onReady.run();
+        })));
     }
 
     public Window newWindow() {
         Window window = new Window("", skin);
+        window.setKeepWithinStage(false);
+        window.setModal(true);
+        int pad = 40;
+        window.padLeft(pad).padRight(pad).padBottom(pad);
+
+        return window;
+    }
+
+    public Window newTypedWindow(String type) {
+        Window window = new Window("", skin, type);
         window.setKeepWithinStage(false);
         window.setModal(true);
         int pad = 40;

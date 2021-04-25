@@ -9,6 +9,9 @@ BitmapFont: {
 	font32: {
 		file: font32.fnt
 	}
+	font64: {
+		file: font64.fnt
+	}
 }
 Color: {
 	disabled: {
@@ -98,6 +101,10 @@ LabelStyle: {
 		parent: default
 		font: font24
 	}
+	white64: {
+		parent: default
+		font: font64
+	}
 }
 TextButtonStyle: {
 	default: {
@@ -130,6 +137,11 @@ WindowStyle: {
 		titleFont: font32
 		titleFontColor: green
 		stageBackground: translucent
+	}
+	info: {
+		parent: default
+		background: panel
+		titleFont: font32
 	}
 }
 }

@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.isoterik.cash4life.double_cash.Constants;
@@ -40,10 +41,13 @@ public class GamePlayScene extends Scene {
     private GameType gameType = GameType.HIGHER;
     private Turn turn;
     private int stakeAmount = 0;
+    private int played = 0;
     private boolean canPlay = false;
+    private boolean opponentHasPlayed = false;
 
     private UIHelper uiHelper;
     private UIHelper.StakeListener stakeListener;
+    private Runnable onOpponentReady;
 
     public GamePlayScene() {
         minGdx = MinGdx.instance();
@@ -106,14 +110,36 @@ public class GamePlayScene extends Scene {
         ActorAnimation.instance().setup(Constants.GUI_WIDTH, Constants.GUI_HEIGHT);
         uiHelper = new UIHelper(canvas);
 
+        onOpponentReady = () -> {
+            int waitPeriod = MathUtils.random(1, 3);
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    if (userChoice == null) {
+                        // If we're playing first, we randomly guess what the user will choose
+                        playForOpponent(pickedCards.random());
+                    }
+                    else
+                        playForOpponent();
+                }
+            }, waitPeriod);
+        };
+
         stakeListener = (gameType, amount) -> {
             this.gameType = gameType;
             this.stakeAmount = amount;
 
-            if (MathUtils.randomBoolean())
-                turn = Turn.USER;
-            else
-                turn = Turn.OPPONENT;
+            placeCards(false);
+
+            Timer.schedule(new Timer.Task() {
+                @Override
+                public void run() {
+                    if (MathUtils.randomBoolean(Constants.STARTING_CHANCE))
+                        startUserTurn();
+                    else
+                        startOpponentTurn();
+                }
+            }, 1f);
         };
     }
 
@@ -138,8 +164,10 @@ public class GamePlayScene extends Scene {
 
     private void newGame() {
         pickRandomCards();
-        placeCards(false);
-
+        userChoice = null;
+        opponentChoice = null;
+        opponentHasPlayed = false;
+        played = 0;
         uiHelper.showStakeDialog(stakeListener);
     }
 
@@ -185,8 +213,9 @@ public class GamePlayScene extends Scene {
         }
     }
 
-    private void cardSelected() {
+    private void userPlayed() {
         canPlay = false;
+        played++;
 
         Card card = userChoice.getComponent(Card.class);
         float x = userChoice.transform.getX();
@@ -207,18 +236,22 @@ public class GamePlayScene extends Scene {
         actor.setSize(realSize.x, realSize.y);
         actor.setScale(Card.HIDDEN_SCALE);
         actor.setOrigin(realSize.x / 2f, realSize.y / 2f);
-        actor.addAction(Actions.sequence(action1, Actions.run(() -> card.setRevealed(true)), action2));
+        actor.addAction(Actions.sequence(action1, Actions.run(() -> card.setRevealed(true)), action2,
+                Actions.run(() -> {
+                    // Play for opponent if not played. Else end the game
+                    if (played == 1)
+                        startOpponentTurn();
+                    else
+                        finishGame();
+                })));
 
         userChoice.transform.setPosition(x, y);
         pickedCards.removeValue(userChoice, true);
-        playForOpponent();
     }
 
-    private void playForOpponent() {
+    private void playForOpponent(ActorGameObject userChoice) {
         opponentChoice = pickedCards.random();
-//        System.out.println("Initial choice: " + opponentChoice.getComponent(Card.class).number);
-//        System.out.println("Max choice: " + getMaximumPick().getComponent(Card.class).number);
-//        System.out.println("Min choice: " + getMinimumPick().getComponent(Card.class).number);
+        played++;
 
         // Get the user chosen number
         int userNumber = userChoice.getComponent(Card.class).number;
@@ -270,11 +303,35 @@ public class GamePlayScene extends Scene {
                 .7f, Interpolation.pow5Out);
 
         actor.setSize(opponentChoice.transform.getWidth(), opponentChoice.transform.getHeight());
-        actor.addAction(Actions.sequence(action1, Actions.run(this::revealChoices)));
+        actor.addAction(Actions.sequence(action1, Actions.run(() -> {
+            if (played == 1)
+                startUserTurn();
+            else
+                finishGame();
+        })));
 
         opponentChoice.transform.setPosition(x, y);
-
         pickedCards.removeValue(opponentChoice, true);
+    }
+
+    private void playForOpponent() {
+        playForOpponent(userChoice);
+    }
+
+    private void startUserTurn() {
+        canPlay = true;
+        turn = Turn.USER;
+        uiHelper.showYourTurn();
+    }
+
+    private void startOpponentTurn() {
+        canPlay = false;
+        turn = Turn.OPPONENT;
+        uiHelper.showOpponentTurn(onOpponentReady);
+    }
+
+    private void finishGame() {
+        revealChoices();
     }
 
     private void revealChoices() {
@@ -329,20 +386,16 @@ public class GamePlayScene extends Scene {
         return gameObject.transform.getWidth() * gameObject.transform.getScaleX();
     }
 
-    private float getRealHeight(GameObject gameObject) {
-        return gameObject.transform.getHeight() * gameObject.transform.getScaleY();
-    }
-
     public class CardClickListener implements ITouchListener {
         @Override
         public void onTouch(String mappingName, TouchEventData touchEventData) {
-            if (!canPlay)
+            if (!canPlay || turn != Turn.USER)
                 return;
 
             for (ActorGameObject card : pickedCards) {
                 if (card.getHostScene() != null && card.getComponent(Card.class).isTouched(touchEventData.touchX, touchEventData.touchY)) {
                     userChoice = card;
-                    cardSelected();
+                    userPlayed();
                     break;
                 }
             }
