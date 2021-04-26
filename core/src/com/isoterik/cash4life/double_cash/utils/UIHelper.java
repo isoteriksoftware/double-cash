@@ -141,12 +141,15 @@ public final class UIHelper {
             }
         });
 
+        Table stakeTbl = new Table();
+        stakeTbl.left();
+        stakeTbl.add(amount).padRight(20);
+        stakeTbl.add(stake).height(40).expandX().fillX();
+
         window.top().padTop(50);
         window.add(title).expandX().fillX().left().colspan(2);
         window.row().padTop(50);
-        window.add(amount).padRight(20).left();
-        window.row().padTop(5);
-        window.add(stake).height(50).expandX().fillX().left();
+        window.add(stakeTbl).expandX().fillX().colspan(2);
         window.row().padTop(30);
         window.add(btnHighest).expandX().fillX().padRight(30);
         window.add(btnLowest).expandX().fillX();
