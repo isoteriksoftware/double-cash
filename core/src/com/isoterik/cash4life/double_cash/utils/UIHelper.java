@@ -159,6 +159,69 @@ public final class UIHelper {
         ActorAnimation.instance().slideIn(window, ActorAnimation.DOWN, 1f, Interpolation.swingOut);
     }
 
+    public void showGameOverDialog(String status, String earning, GameOverListener gameOverListener) {
+        Window window = newWindow();
+
+        Label statusLbl = new Label(status, skin, "green64");
+        statusLbl.setAlignment(Align.center);
+
+        Label earningsLabel = new Label("EARNINGS", skin, "main32");
+        Label earnings = new Label(earning, skin, "money");
+        Table labelTbl = new Table();
+        labelTbl.left();
+        labelTbl.add(earningsLabel).padRight(30);
+        labelTbl.add(earnings).expandX().fillX();
+
+        Button btnHome = new Button(skin, "home");
+        btnHome.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                float duration = .5f;
+                ActorAnimation.instance().slideOutThenRemove(window, ActorAnimation.UP, duration, Interpolation.pow5Out);
+                window.addAction(Actions.delay(duration, Actions.run(() -> gameOverListener.onAction(GameOverListener.Action.HOME))));
+            }
+        });
+
+        Button btnRestart = new Button(skin, "restart");
+        btnRestart.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                float duration = .5f;
+                ActorAnimation.instance().slideOutThenRemove(window, ActorAnimation.UP, duration, Interpolation.pow5Out);
+                window.addAction(Actions.delay(duration, Actions.run(() -> gameOverListener.onAction(GameOverListener.Action.RESTART))));
+            }
+        });
+
+        Button btnQuit = new Button(skin, "quit");
+        btnQuit.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                float duration = .5f;
+                ActorAnimation.instance().slideOutThenRemove(window, ActorAnimation.UP, duration, Interpolation.pow5Out);
+                window.addAction(Actions.delay(duration, Actions.run(() -> gameOverListener.onAction(GameOverListener.Action.QUIT))));
+            }
+        });
+
+        Table bottom = new Table();
+        int pad = 20;
+        bottom.add(btnHome).expandX().padRight(pad);
+        bottom.add(btnRestart).expandX().padRight(pad);
+        bottom.add(btnQuit).expandX();
+
+        window.top().padTop(50);
+        window.add(statusLbl).expandX().fillX().left().colspan(2);
+        window.row().padTop(100);
+        window.add(labelTbl).expandX().fillX();
+        window.row().padTop(50);
+        window.add(bottom).bottom().expand().fillX();
+
+        canvas.addActor(window);
+        window.pack();
+        centerActor(window, canvas);
+        centerActorOrigin(window);
+        ActorAnimation.instance().slideIn(window, ActorAnimation.DOWN, .7f, Interpolation.swingOut);
+    }
+
     public static void centerActor(Actor actor, Stage canvas) {
         actor.setX((canvas.getWidth() - actor.getWidth())/2f);
         actor.setY((canvas.getHeight() - actor.getHeight())/2f);
@@ -171,6 +234,14 @@ public final class UIHelper {
 
     public interface StakeListener {
         void onStake(GamePlayScene.GameType gameType, int amount);
+    }
+
+    public interface GameOverListener {
+        enum Action {
+            HOME, RESTART, QUIT
+        }
+
+        void onAction(Action action);
     }
 }
 

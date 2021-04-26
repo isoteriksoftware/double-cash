@@ -47,6 +47,7 @@ public class GamePlayScene extends Scene {
 
     private UIHelper uiHelper;
     private UIHelper.StakeListener stakeListener;
+    private UIHelper.GameOverListener gameOverListener;
     private Runnable onOpponentReady;
 
     public GamePlayScene() {
@@ -130,7 +131,6 @@ public class GamePlayScene extends Scene {
             this.stakeAmount = amount;
 
             placeCards(false);
-
             Timer.schedule(new Timer.Task() {
                 @Override
                 public void run() {
@@ -140,6 +140,15 @@ public class GamePlayScene extends Scene {
                         startOpponentTurn();
                 }
             }, 1f);
+        };
+
+        gameOverListener = action -> {
+            newGame();
+//            switch (action) {
+//                case RESTART:
+//                    newGame();
+//                    break;
+//            }
         };
     }
 
@@ -163,7 +172,20 @@ public class GamePlayScene extends Scene {
     }
 
     private void newGame() {
+        if (played == 2) {
+            pickedCards.add(userChoice, opponentChoice);
+
+            for (ActorGameObject gameObject : pickedCards) {
+                gameObject.getComponent(Card.class).setRevealed(false);
+                removeGameObject(gameObject);
+            }
+        }
+
         pickRandomCards();
+        centerCards();
+        for (ActorGameObject gameObject : pickedCards)
+            addGameObject(gameObject);
+
         userChoice = null;
         opponentChoice = null;
         opponentHasPlayed = false;
@@ -184,7 +206,6 @@ public class GamePlayScene extends Scene {
             my -= worldUnits.toWorldUnit(30);
 
         middle.transform.setPosition(mx, my);
-        addGameObject(middle);
 
         float spacing = worldUnits.toWorldUnit(10);
 
@@ -197,7 +218,6 @@ public class GamePlayScene extends Scene {
                     1f, Interpolation.pow5Out));
 
             card.transform.setPosition(mx, my);
-            addGameObject(card);
         }
 
         for (int i = middleIndex + 1; i < max; i++) {
@@ -209,20 +229,35 @@ public class GamePlayScene extends Scene {
                     1f, Interpolation.pow5Out));
 
             card.transform.setPosition(mx, my);
-            addGameObject(card);
         }
+    }
+
+    private void centerCards() {
+        int max = pickedCards.size;
+
+        // Calculate the position of the middle card
+        int middleIndex = max/2;
+        ActorGameObject middle = pickedCards.get(middleIndex);
+        float mx = (table.transform.getX() + table.transform.getWidth()/2f) - middle.transform.getWidth()/2f;
+        float my = (table.transform.getY() + table.transform.getHeight()/2f) - middle.transform.getHeight()/2f;
+
+        for (ActorGameObject gameObject : pickedCards)
+            gameObject.actorTransform.setPosition(mx, my);
     }
 
     private void userPlayed() {
         canPlay = false;
         played++;
 
+        Transform ot = opponent.transform;
         Card card = userChoice.getComponent(Card.class);
         float x = userChoice.transform.getX();
         float y = userChoice.transform.getY();
 
-        placeInCenterOf(userChoice, table);
-        userChoice.transform.setPosition(userChoice.transform().getX(), worldUnits.toWorldUnit(10));
+        userChoice.transform.setPosition(ot.getX() + (ot.getWidth() - card.getRealWidth())/2f,
+                ot.getY() - card.getRealHeight());
+        userChoice.transform.setPosition(userChoice.transform().getX() - worldUnits.toWorldUnit(15),
+                worldUnits.toWorldUnit(10));
 
         Vector2 realSize = card.getRealSize();
 
@@ -332,6 +367,38 @@ public class GamePlayScene extends Scene {
 
     private void finishGame() {
         revealChoices();
+
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+                int userNumber = userChoice.getComponent(Card.class).number;
+                int opponentNumber = opponentChoice.getComponent(Card.class).number;
+
+                if (userNumber == opponentNumber) {
+                    int won = stakeAmount / 2;
+                    uiHelper.showGameOverDialog("YOU DREW", "+" + won, gameOverListener);
+                }
+                else {
+                    int stake = stakeAmount;
+                    if (gameType == GameType.HIGHER) {
+                        if (userNumber > opponentNumber) {
+                            uiHelper.showGameOverDialog("YOU WON", "+" + stake, gameOverListener);
+                        }
+                        else {
+                            uiHelper.showGameOverDialog("YOU LOST", "-" + stake, gameOverListener);
+                        }
+                    }
+                    else {
+                        if (userNumber < opponentNumber) {
+                            uiHelper.showGameOverDialog("YOU WON", "+" + stake, gameOverListener);
+                        }
+                        else {
+                            uiHelper.showGameOverDialog("YOU LOST", "-" + stake, gameOverListener);
+                        }
+                    }
+                }
+            }
+        }, 2f);
     }
 
     private void revealChoices() {

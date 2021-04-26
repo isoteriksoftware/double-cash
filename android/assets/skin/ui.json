@@ -1,5 +1,5 @@
 {
-BitmapFont: {
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	font16: {
 		file: font.fnt
 	}
@@ -13,7 +13,7 @@ BitmapFont: {
 		file: font64.fnt
 	}
 }
-Color: {
+com.badlogic.gdx.graphics.Color: {
 	disabled: {
 		r: 0.5366667
 		g: 0.5330889
@@ -30,6 +30,12 @@ Color: {
 		r: 0.87
 		g: 0.87
 		b: 0.87
+		a: 1
+	}
+	main: {
+		r: 0.7176471
+		g: 0.54509807
+		b: 0.1764706
 		a: 1
 	}
 	white: {
@@ -56,7 +62,7 @@ com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable: {
 		bottomHeight: 9
 	}
 }
-TintedDrawable: {
+com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 	translucent: {
 		name: white
 		color: {
@@ -73,7 +79,24 @@ TintedDrawable: {
 		minHeight: 70
 	}
 }
-LabelStyle: {
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	home: {
+		up: btn-home-up
+		down: btn-home-down
+		over: btn-home-over
+	}
+	restart: {
+		up: btn-restart-up
+		down: btn-restart-down
+		over: btn-restart-over
+	}
+	quit: {
+		up: btn-quit-up
+		down: btn-quit-down
+		over: btn-quit-over
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
 		font: font32
 	}
@@ -105,8 +128,34 @@ LabelStyle: {
 		parent: default
 		font: font64
 	}
+	main32: {
+		font: font32
+		fontColor: main
+	}
+	main16: {
+		parent: main32
+		font: font16
+	}
+	main24: {
+		parent: main32
+		font: font24
+	}
+	main64: {
+		parent: main32
+		font: font64
+	}
+	money: {
+		parent: default
+		font: font32
+		fontColor: white
+		background: field
+	}
+	green64: {
+		parent: green
+		font: font64
+	}
 }
-TextButtonStyle: {
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: {
 		font: font32
 		fontColor: green
@@ -118,7 +167,7 @@ TextButtonStyle: {
 		disabled: btn-disabled
 	}
 }
-TextFieldStyle: {
+com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: {
 		font: font24
 		fontColor: white
@@ -126,12 +175,12 @@ TextFieldStyle: {
 		cursor: cursor-green
 	}
 }
-TextTooltipStyle: {
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
 	default: {
 		label: default
 	}
 }
-WindowStyle: {
+com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: {
 		background: window
 		titleFont: font32
@@ -142,6 +191,10 @@ WindowStyle: {
 		parent: default
 		background: panel
 		titleFont: font32
+	}
+	options: {
+		parent: default
+		background: game-over-window
 	}
 }
 }
