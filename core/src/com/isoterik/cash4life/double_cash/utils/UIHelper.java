@@ -156,7 +156,7 @@ public final class UIHelper {
         canvas.addActor(window);
         centerActor(window, canvas);
         centerActorOrigin(window);
-        ActorAnimation.instance().slideIn(window, ActorAnimation.DOWN, 1f, Interpolation.swingOut);
+        ActorAnimation.instance().slideIn(window, ActorAnimation.DOWN, .7f, Interpolation.swingOut);
     }
 
     public void showGameOverDialog(String status, String earning, GameOverListener gameOverListener) {
