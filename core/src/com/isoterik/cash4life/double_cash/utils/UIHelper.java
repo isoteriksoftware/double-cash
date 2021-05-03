@@ -28,7 +28,8 @@ public final class UIHelper {
     private Skin skin;
 
     public Label balanceLabel;
-    public Button btnDeposit, btnSettings;
+    public Button btnDeposit, btnSettings, btnHelp, btnSound, btnQuit;
+    public Window menuWindow;
 
     public UIHelper(Stage canvas) {
         this.canvas = canvas;
@@ -239,6 +240,9 @@ public final class UIHelper {
         window2.setModal(false);
         window2.pad(0);
 
+        menuWindow = newTypedWindow("balance-modal");
+        menuWindow.pad(10);
+
         balanceLabel = new Label("000000", skin, "main24");
         //balanceLabel.setAlignment(Align.center);
         balanceLabel.pack();
@@ -248,12 +252,19 @@ public final class UIHelper {
 
         btnDeposit = new Button(skin, "plus-small");
         btnSettings = new Button(skin, "settings-small");
+        btnQuit = new Button(skin, "quit-small");
+        btnSound = new Button(skin, "sound-small");
+        btnHelp = new Button(skin, "help-small");
 
         window.add(balanceLabel).left().expandX();
         window.add(btnDeposit).right();
 
         window2.add(btnSettings).left();
         window2.add(settings).right().expandX().padRight(20);
+
+        menuWindow.add(btnHelp).left();
+        menuWindow.add(btnSound).expandX();
+        menuWindow.add(btnQuit).right();
 
         window2.pack();
         window2.setX(canvas.getWidth() - window2.getWidth() - 20);
@@ -263,8 +274,13 @@ public final class UIHelper {
         window.setX(20);
         window.setY(canvas.getHeight() - window.getHeight() - 20);
 
+        menuWindow.pack();
+        menuWindow.setX(window2.getX());
+        menuWindow.setY(window2.getY() - menuWindow.getHeight());
+
         canvas.addActor(window);
         canvas.addActor(window2);
+        canvas.addActor(menuWindow);
     }
 
     public static void centerActor(Actor actor, Stage canvas) {

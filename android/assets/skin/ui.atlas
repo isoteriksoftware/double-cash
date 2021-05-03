@@ -28,6 +28,54 @@ btn-down
   orig: 141, 53
   offset: 0, 0
   index: -1
+btn-exit-small-down
+  rotate: false
+  xy: 1003, 1681
+  size: 58, 59
+  split: 28, 28, 29, 29
+  orig: 58, 59
+  offset: 0, 0
+  index: -1
+btn-exit-small-over
+  rotate: false
+  xy: 1003, 1620
+  size: 58, 59
+  split: 28, 28, 29, 29
+  orig: 58, 59
+  offset: 0, 0
+  index: -1
+btn-exit-small-up
+  rotate: false
+  xy: 668, 1022
+  size: 59, 59
+  split: 29, 29, 29, 29
+  orig: 59, 59
+  offset: 0, 0
+  index: -1
+btn-help-small-down
+  rotate: false
+  xy: 1023, 1803
+  size: 58, 59
+  split: 29, 28, 29, 29
+  orig: 58, 59
+  offset: 0, 0
+  index: -1
+btn-help-small-over
+  rotate: false
+  xy: 1083, 1803
+  size: 58, 59
+  split: 29, 28, 29, 29
+  orig: 58, 59
+  offset: 0, 0
+  index: -1
+btn-help-small-up
+  rotate: false
+  xy: 729, 1022
+  size: 58, 59
+  split: 29, 28, 29, 29
+  orig: 58, 59
+  offset: 0, 0
+  index: -1
 btn-home-down
   rotate: false
   xy: 1, 510
@@ -78,7 +126,7 @@ btn-plus-over
   index: -1
 btn-plus-small-down
   rotate: false
-  xy: 721, 1037
+  xy: 47, 1
   size: 44, 44
   split: 22, 21, 22, 21
   orig: 44, 44
@@ -86,7 +134,7 @@ btn-plus-small-down
   index: -1
 btn-plus-small-over
   rotate: false
-  xy: 47, 1
+  xy: 93, 1
   size: 44, 44
   split: 22, 21, 22, 21
   orig: 44, 44
@@ -174,7 +222,7 @@ btn-settings-over
   index: -1
 btn-settings-small-down
   rotate: false
-  xy: 873, 1152
+  xy: 1063, 1634
   size: 51, 52
   split: 25, 25, 26, 25
   orig: 51, 52
@@ -182,7 +230,7 @@ btn-settings-small-down
   index: -1
 btn-settings-small-over
   rotate: false
-  xy: 668, 1029
+  xy: 1167, 1865
   size: 51, 52
   split: 25, 25, 26, 25
   orig: 51, 52
@@ -190,7 +238,7 @@ btn-settings-small-over
   index: -1
 btn-settings-small-up
   rotate: false
-  xy: 820, 1152
+  xy: 1063, 1688
   size: 51, 52
   split: 25, 25, 26, 25
   orig: 51, 52
@@ -202,6 +250,38 @@ btn-settings-up
   size: 151, 153
   split: 75, 75, 76, 76
   orig: 151, 153
+  offset: 0, 0
+  index: -1
+btn-sound-small-disabled
+  rotate: false
+  xy: 881, 1145
+  size: 59, 59
+  split: 29, 29, 29, 29
+  orig: 59, 59
+  offset: 0, 0
+  index: -1
+btn-sound-small-down
+  rotate: false
+  xy: 1022, 1742
+  size: 58, 59
+  split: 28, 28, 29, 29
+  orig: 58, 59
+  offset: 0, 0
+  index: -1
+btn-sound-small-over
+  rotate: false
+  xy: 1082, 1742
+  size: 58, 59
+  split: 28, 28, 29, 29
+  orig: 58, 59
+  offset: 0, 0
+  index: -1
+btn-sound-small-up
+  rotate: false
+  xy: 820, 1145
+  size: 59, 59
+  split: 29, 29, 29, 29
+  orig: 59, 59
   offset: 0, 0
   index: -1
 btn-up
@@ -334,7 +414,7 @@ font64_1
   index: -1
 white
   rotate: false
-  xy: 1204, 1992
+  xy: 154, 654
   size: 8, 8
   orig: 8, 8
   offset: 0, 0

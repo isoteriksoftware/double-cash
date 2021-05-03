@@ -124,6 +124,23 @@ ButtonStyle: {
 		down: btn-settings-small-down
 		over: btn-settings-small-over
 	}
+	help-small: {
+		up: btn-help-small-up
+		down: btn-help-small-down
+		over: btn-help-small-over
+	}
+	sound-small: {
+		up: btn-sound-small-up
+		down: btn-sound-small-down
+		over: btn-sound-small-over
+		checked: btn-sound-small-disabled
+		checkedOver: btn-sound-small-over
+	}
+	quit-small: {
+		up: btn-exit-small-up
+		down: btn-exit-small-down
+		over: btn-exit-small-over
+	}
 }
 LabelStyle: {
 	default: {
@@ -229,6 +246,10 @@ WindowStyle: {
 		background: panel
 		titleFont: font24
 		titleFontColor: white
+	}
+	balance-modal: {
+		parent: balance
+		stageBackground: translucent
 	}
 }
 }
