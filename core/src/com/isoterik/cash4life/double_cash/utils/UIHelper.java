@@ -23,9 +23,9 @@ import com.isoterik.mgdx.io.GameAssetsLoader;
 import com.isoterik.mgdx.ui.ActorAnimation;
 
 public final class UIHelper {
-    private Stage canvas;
+    private final Stage canvas;
     private GameAssetsLoader assetsLoader;
-    private Skin skin;
+    private final Skin skin;
 
     public Label balanceLabel;
     public Button btnDeposit, btnSettings, btnHelp, btnSound, btnQuit;
@@ -240,9 +240,9 @@ public final class UIHelper {
         menuSelectorWindow.pad(0);
 
         menuWindow = newTypedWindow("balance-modal");
-        menuWindow.pad(10);
+        menuWindow.pad(5).padTop(10).padBottom(10);
 
-        balanceLabel = new Label("000000", skin, "main24");
+        balanceLabel = new Label("000000", skin, "main32");
         //balanceLabel.setAlignment(Align.center);
         balanceLabel.pack();
 
@@ -289,28 +289,26 @@ public final class UIHelper {
             }
         });
 
-        window.add(balanceLabel).left().expandX();
-        window.add(btnDeposit).right();
+        float size = 70;
+        int spacing = 30;
 
-        menuSelectorWindow.add(btnSettings).left();
+        window.add(balanceLabel).left().expandX().padRight(20);
+        window.add(btnDeposit).right().size(size);
+
+        menuSelectorWindow.add(btnSettings).size(size).left();
         menuSelectorWindow.add(settings).right().expandX().padRight(20);
 
-        menuWindow.add(btnHelp).left();
-        menuWindow.add(btnSound).expandX();
-        menuWindow.add(btnQuit).right();
-        menuWindow.setKeepWithinStage(false);
+        menuWindow.add(btnHelp).size(size).row();
+        menuWindow.add(btnSound).size(size).padTop(5).padBottom(5).row();
+        menuWindow.add(btnQuit).size(size).row();
 
         menuSelectorWindow.pack();
-        menuSelectorWindow.setX(canvas.getWidth() - menuSelectorWindow.getWidth() - 20);
-        menuSelectorWindow.setY(canvas.getHeight() - menuSelectorWindow.getHeight() - 20);
+        menuSelectorWindow.setX(canvas.getWidth() - menuSelectorWindow.getWidth() - spacing);
+        menuSelectorWindow.setY(canvas.getHeight() - menuSelectorWindow.getHeight() - spacing);
 
         window.pack();
-        window.setX(20);
-        window.setY(canvas.getHeight() - window.getHeight() - 20);
-
-        menuWindow.pack();
-        menuWindow.setX(menuSelectorWindow.getX());
-        menuWindow.setY(menuSelectorWindow.getY() - menuWindow.getHeight());
+        window.setX(spacing);
+        window.setY(canvas.getHeight() - window.getHeight() - spacing);
 
         canvas.addActor(window);
         canvas.addActor(menuSelectorWindow);
@@ -336,8 +334,12 @@ public final class UIHelper {
             }
         });
 
+        menuWindow.pack();
+
+        int width = 90;
         menuContainer.top().right();
-        menuContainer.add(menuWindow).pad(20).padTop(menuSelectorWindow.getHeight() + 20);
+        menuContainer.add(menuWindow).width(width).pad(20).padTop(menuSelectorWindow.getHeight() + 30)
+            .padRight(menuSelectorWindow.getWidth() - width + 30);
 
         ActorAnimation.instance().slideIn(menuContainer, ActorAnimation.RIGHT, duration,
                 Interpolation.pow5Out);
