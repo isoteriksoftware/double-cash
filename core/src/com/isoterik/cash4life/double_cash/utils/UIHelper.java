@@ -97,7 +97,7 @@ public final class UIHelper {
         return window;
     }
 
-    public void showStakeDialog(StakeListener stakeListener) {
+    public void showStakeDialog(StakeListener stakeListener, int balance) {
         Window window = newWindow();
 
         Label title = new Label("What's your stake?".toUpperCase(), skin, "green");
@@ -113,8 +113,9 @@ public final class UIHelper {
                     @Override
                     public void input(String text) {
                         try {
-                            Integer.parseInt(text);
-                            stake.setText(text);
+                            int amount = Integer.parseInt(text);
+                            if (amount <= balance && amount >= 50)
+                                stake.setText(text);
                         } catch (Exception ignored) {}
                     }
 

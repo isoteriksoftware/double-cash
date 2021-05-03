@@ -42,6 +42,7 @@ public class GamePlayScene extends Scene {
     private GameType gameType = GameType.HIGHER;
     private Turn turn;
     private int stakeAmount = 0;
+    private int balance = 5000;
     private int played = 0;
     private boolean canPlay = false;
     private boolean opponentHasPlayed = false;
@@ -117,6 +118,7 @@ public class GamePlayScene extends Scene {
 
         };
         uiHelper.setupUI(menuListener);
+        uiHelper.balanceLabel.setText(balance);
 
         onOpponentReady = () -> {
             int waitPeriod = MathUtils.random(1, 3);
@@ -136,6 +138,8 @@ public class GamePlayScene extends Scene {
         stakeListener = (gameType, amount) -> {
             this.gameType = gameType;
             this.stakeAmount = amount;
+            balance -= amount;
+            uiHelper.balanceLabel.setText(balance);
 
             placeCards(false);
             Timer.schedule(new Timer.Task() {
@@ -157,14 +161,6 @@ public class GamePlayScene extends Scene {
 //                    break;
 //            }
         };
-    }
-
-    private void placeInCenterOf(GameObject gameObject, GameObject host) {
-        Transform gt = gameObject.transform;
-        Transform ht = host.transform;
-
-        gt.setPosition((ht.getX() + ht.getWidth()/2f) - gt.getWidth()/2f,
-                (ht.getY() + ht.getHeight()/2f) - gt.getHeight()/2f);
     }
 
     private void pickRandomCards() {
@@ -197,7 +193,7 @@ public class GamePlayScene extends Scene {
         opponentChoice = null;
         opponentHasPlayed = false;
         played = 0;
-        uiHelper.showStakeDialog(stakeListener);
+        uiHelper.showStakeDialog(stakeListener, balance);
     }
 
     private void placeCards(boolean isGameOver) {
@@ -383,13 +379,16 @@ public class GamePlayScene extends Scene {
 
                 if (userNumber == opponentNumber) {
                     int won = stakeAmount / 2;
+                    balance += won;
                     uiHelper.showGameOverDialog("YOU DREW", "+" + won, gameOverListener);
                 }
                 else {
                     int stake = stakeAmount;
+                    int won = 0;
                     if (gameType == GameType.HIGHER) {
                         if (userNumber > opponentNumber) {
-                            uiHelper.showGameOverDialog("YOU WON", "+" + stake, gameOverListener);
+                            won = stake * 2;
+                            uiHelper.showGameOverDialog("YOU WON", "+" + won, gameOverListener);
                         }
                         else {
                             uiHelper.showGameOverDialog("YOU LOST", "-" + stake, gameOverListener);
@@ -397,13 +396,18 @@ public class GamePlayScene extends Scene {
                     }
                     else {
                         if (userNumber < opponentNumber) {
-                            uiHelper.showGameOverDialog("YOU WON", "+" + stake, gameOverListener);
+                            won = stake * 2;
+                            uiHelper.showGameOverDialog("YOU WON", "+" + won, gameOverListener);
                         }
                         else {
                             uiHelper.showGameOverDialog("YOU LOST", "-" + stake, gameOverListener);
                         }
                     }
+
+                    balance += won;
                 }
+
+                uiHelper.balanceLabel.setText(balance);
             }
         }, 2f);
     }
