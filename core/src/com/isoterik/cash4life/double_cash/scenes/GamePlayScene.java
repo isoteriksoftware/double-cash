@@ -94,7 +94,7 @@ public class GamePlayScene extends Scene {
             card.addComponent(new BoxDebugRenderer());
         }
 
-        //newGame();
+        newGame();
 
         inputManager.addListener(TouchTrigger.touchDownTrigger(), new CardClickListener());
     }
