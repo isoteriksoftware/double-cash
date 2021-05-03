@@ -1,5 +1,5 @@
 {
-com.badlogic.gdx.graphics.g2d.BitmapFont: {
+BitmapFont: {
 	font16: {
 		file: font.fnt
 	}
@@ -13,7 +13,7 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 		file: font64.fnt
 	}
 }
-com.badlogic.gdx.graphics.Color: {
+Color: {
 	disabled: {
 		r: 0.5366667
 		g: 0.5330889
@@ -61,8 +61,17 @@ com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable: {
 		topHeight: 10
 		bottomHeight: 9
 	}
+	balance: {
+		patch: balance
+		minWidth: 167
+		minHeight: 60
+		leftWidth: 64
+		rightWidth: 25
+		topHeight: 18
+		bottomHeight: 18
+	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+TintedDrawable: {
 	translucent: {
 		name: white
 		color: {
@@ -79,7 +88,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 		minHeight: 70
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+ButtonStyle: {
 	home: {
 		up: btn-home-up
 		down: btn-home-down
@@ -95,8 +104,28 @@ com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 		down: btn-quit-down
 		over: btn-quit-over
 	}
+	plus: {
+		up: btn-plus-up
+		down: btn-plus-down
+		over: btn-plus-over
+	}
+	settings: {
+		up: btn-settings-up
+		down: btn-settings-down
+		over: btn-settings-over
+	}
+	plus-small: {
+		up: btn-plus-small-up
+		down: btn-plus-small-down
+		over: btn-plus-small-over
+	}
+	settings-small: {
+		up: btn-settings-small-up
+		down: btn-settings-small-down
+		over: btn-settings-small-over
+	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+LabelStyle: {
 	default: {
 		font: font32
 	}
@@ -105,8 +134,8 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		background: window-panel
 	}
 	balance: {
-		font: font16
-		background: window-money
+		font: font24
+		background: balance
 	}
 	green: {
 		parent: default
@@ -155,7 +184,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		font: font64
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+TextButtonStyle: {
 	default: {
 		font: font32
 		fontColor: green
@@ -167,7 +196,7 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 		disabled: btn-disabled
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+TextFieldStyle: {
 	default: {
 		font: font24
 		fontColor: white
@@ -175,12 +204,12 @@ com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 		cursor: cursor-green
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+TextTooltipStyle: {
 	default: {
 		label: default
 	}
 }
-com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+WindowStyle: {
 	default: {
 		background: window
 		titleFont: font32
@@ -195,6 +224,11 @@ com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	options: {
 		parent: default
 		background: game-over-window
+	}
+	balance: {
+		background: panel
+		titleFont: font24
+		titleFontColor: white
 	}
 }
 }

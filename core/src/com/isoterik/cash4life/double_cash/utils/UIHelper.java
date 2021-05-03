@@ -27,10 +27,15 @@ public final class UIHelper {
     private GameAssetsLoader assetsLoader;
     private Skin skin;
 
+    public Label balanceLabel;
+    public Button btnDeposit, btnSettings;
+
     public UIHelper(Stage canvas) {
         this.canvas = canvas;
         this.assetsLoader = MinGdx.instance().assets;
         this.skin = assetsLoader.getSkin(Constants.SKIN);
+
+        setupUI();
     }
 
     public void showYourTurn() {
@@ -223,6 +228,43 @@ public final class UIHelper {
         centerActor(window, canvas);
         centerActorOrigin(window);
         ActorAnimation.instance().slideIn(window, ActorAnimation.DOWN, .7f, Interpolation.swingOut);
+    }
+
+    private void setupUI() {
+        Window window = newTypedWindow("balance");
+        window.setModal(false);
+        window.pad(0).padLeft(20);
+
+        Window window2 = newTypedWindow("balance");
+        window2.setModal(false);
+        window2.pad(0);
+
+        balanceLabel = new Label("000000", skin, "main24");
+        //balanceLabel.setAlignment(Align.center);
+        balanceLabel.pack();
+
+        Label settings = new Label("Menu", skin, "main32");
+        settings.pack();
+
+        btnDeposit = new Button(skin, "plus-small");
+        btnSettings = new Button(skin, "settings-small");
+
+        window.add(balanceLabel).left().expandX();
+        window.add(btnDeposit).right();
+
+        window2.add(btnSettings).left();
+        window2.add(settings).right().expandX().padRight(20);
+
+        window2.pack();
+        window2.setX(canvas.getWidth() - window2.getWidth() - 20);
+        window2.setY(canvas.getHeight() - window2.getHeight() - 20);
+
+        window.pack();
+        window.setX(20);
+        window.setY(canvas.getHeight() - window.getHeight() - 20);
+
+        canvas.addActor(window);
+        canvas.addActor(window2);
     }
 
     public static void centerActor(Actor actor, Stage canvas) {

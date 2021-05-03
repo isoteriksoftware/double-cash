@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -91,7 +92,7 @@ public class GamePlayScene extends Scene {
             card.addComponent(new BoxDebugRenderer());
         }
 
-        newGame();
+        //newGame();
 
         inputManager.addListener(TouchTrigger.touchDownTrigger(), new CardClickListener());
     }
