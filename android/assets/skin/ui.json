@@ -87,6 +87,15 @@ TintedDrawable: {
 		minWidth: 3
 		minHeight: 70
 	}
+	transparent: {
+		name: white
+		color: {
+			r: 1
+			g: 1
+			b: 1
+			a: 0
+		}
+	}
 }
 ButtonStyle: {
 	home: {
@@ -249,6 +258,10 @@ WindowStyle: {
 	}
 	balance-modal: {
 		parent: balance
+		stageBackground: translucent
+	}
+	transparent: {
+		titleFont: font16
 		stageBackground: translucent
 	}
 }

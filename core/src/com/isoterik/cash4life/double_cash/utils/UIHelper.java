@@ -239,8 +239,8 @@ public final class UIHelper {
         menuSelectorWindow.setModal(false);
         menuSelectorWindow.pad(0);
 
-        menuWindow = newTypedWindow("balance-modal");
-        menuWindow.pad(5).padTop(10).padBottom(10);
+        menuWindow = newTypedWindow("transparent");
+        menuWindow.pad(0).padTop(5);
 
         balanceLabel = new Label("000000", skin, "main32");
         //balanceLabel.setAlignment(Align.center);
@@ -338,8 +338,8 @@ public final class UIHelper {
 
         int width = 90;
         menuContainer.top().right();
-        menuContainer.add(menuWindow).width(width).pad(20).padTop(menuSelectorWindow.getHeight() + 30)
-            .padRight(menuSelectorWindow.getWidth() - width + 30);
+        menuContainer.add(menuWindow).width(width).padTop(menuSelectorWindow.getHeight() + 30)
+            .padRight(menuSelectorWindow.getWidth() - width + 40);
 
         menuWindow.setOriginX(width/2f);
         menuWindow.setOriginY(menuWindow.getHeight());
