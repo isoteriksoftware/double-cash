@@ -51,6 +51,8 @@ public class GamePlayScene extends Scene {
     private UIHelper.GameOverListener gameOverListener;
     private Runnable onOpponentReady;
 
+    private UIHelper.MenuListener menuListener;
+
     public GamePlayScene() {
         minGdx = MinGdx.instance();
         setupCamera();
@@ -111,6 +113,10 @@ public class GamePlayScene extends Scene {
 
         ActorAnimation.instance().setup(Constants.GUI_WIDTH, Constants.GUI_HEIGHT);
         uiHelper = new UIHelper(canvas);
+        menuListener = action -> {
+
+        };
+        uiHelper.setupUI(menuListener);
 
         onOpponentReady = () -> {
             int waitPeriod = MathUtils.random(1, 3);

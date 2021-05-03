@@ -29,14 +29,13 @@ public final class UIHelper {
 
     public Label balanceLabel;
     public Button btnDeposit, btnSettings, btnHelp, btnSound, btnQuit;
-    public Window menuWindow;
+    public Window menuWindow, menuSelectorWindow;
+    private Table menuContainer;
 
     public UIHelper(Stage canvas) {
         this.canvas = canvas;
         this.assetsLoader = MinGdx.instance().assets;
         this.skin = assetsLoader.getSkin(Constants.SKIN);
-
-        setupUI();
     }
 
     public void showYourTurn() {
@@ -231,14 +230,14 @@ public final class UIHelper {
         ActorAnimation.instance().slideIn(window, ActorAnimation.DOWN, .7f, Interpolation.swingOut);
     }
 
-    private void setupUI() {
+    public void setupUI(MenuListener menuListener) {
         Window window = newTypedWindow("balance");
         window.setModal(false);
         window.pad(0).padLeft(20);
 
-        Window window2 = newTypedWindow("balance");
-        window2.setModal(false);
-        window2.pad(0);
+        menuSelectorWindow = newTypedWindow("balance");
+        menuSelectorWindow.setModal(false);
+        menuSelectorWindow.pad(0);
 
         menuWindow = newTypedWindow("balance-modal");
         menuWindow.pad(10);
@@ -256,31 +255,93 @@ public final class UIHelper {
         btnSound = new Button(skin, "sound-small");
         btnHelp = new Button(skin, "help-small");
 
+        btnSettings.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                showMenu();
+            }
+        });
+
+        btnQuit.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                menuContainer.addAction(Actions.delay(.5f, Actions.run(
+                        () -> menuListener.onAction(MenuListener.Action.SOUND)
+                )));
+            }
+        });
+
+        btnHelp.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                menuContainer.addAction(Actions.delay(.5f, Actions.run(
+                        () -> menuListener.onAction(MenuListener.Action.SOUND)
+                )));
+            }
+        });
+
+        btnSound.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                menuContainer.addAction(Actions.delay(.5f, Actions.run(
+                        () -> menuListener.onAction(MenuListener.Action.SOUND)
+                )));
+            }
+        });
+
         window.add(balanceLabel).left().expandX();
         window.add(btnDeposit).right();
 
-        window2.add(btnSettings).left();
-        window2.add(settings).right().expandX().padRight(20);
+        menuSelectorWindow.add(btnSettings).left();
+        menuSelectorWindow.add(settings).right().expandX().padRight(20);
 
         menuWindow.add(btnHelp).left();
         menuWindow.add(btnSound).expandX();
         menuWindow.add(btnQuit).right();
+        menuWindow.setKeepWithinStage(false);
 
-        window2.pack();
-        window2.setX(canvas.getWidth() - window2.getWidth() - 20);
-        window2.setY(canvas.getHeight() - window2.getHeight() - 20);
+        menuSelectorWindow.pack();
+        menuSelectorWindow.setX(canvas.getWidth() - menuSelectorWindow.getWidth() - 20);
+        menuSelectorWindow.setY(canvas.getHeight() - menuSelectorWindow.getHeight() - 20);
 
         window.pack();
         window.setX(20);
         window.setY(canvas.getHeight() - window.getHeight() - 20);
 
         menuWindow.pack();
-        menuWindow.setX(window2.getX());
-        menuWindow.setY(window2.getY() - menuWindow.getHeight());
+        menuWindow.setX(menuSelectorWindow.getX());
+        menuWindow.setY(menuSelectorWindow.getY() - menuWindow.getHeight());
 
         canvas.addActor(window);
-        canvas.addActor(window2);
-        canvas.addActor(menuWindow);
+        canvas.addActor(menuSelectorWindow);
+    }
+
+    private void closeMenu() {
+        float duration = .5f;
+        ActorAnimation.instance().slideOutThenRemove(menuContainer, ActorAnimation.RIGHT, duration,
+                Interpolation.pow5In);
+    }
+
+    private void showMenu() {
+        float duration = .5f;
+
+        menuContainer = new Table();
+        menuContainer.setFillParent(true);
+        menuContainer.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (menuContainer.hasParent()) {
+                    closeMenu();
+                }
+            }
+        });
+
+        menuContainer.top().right();
+        menuContainer.add(menuWindow).pad(20).padTop(menuSelectorWindow.getHeight() + 20);
+
+        ActorAnimation.instance().slideIn(menuContainer, ActorAnimation.RIGHT, duration,
+                Interpolation.pow5Out);
+        canvas.addActor(menuContainer);
     }
 
     public static void centerActor(Actor actor, Stage canvas) {
@@ -300,6 +361,14 @@ public final class UIHelper {
     public interface GameOverListener {
         enum Action {
             HOME, RESTART, QUIT
+        }
+
+        void onAction(Action action);
+    }
+
+    public interface MenuListener {
+        enum Action {
+            HELP, SOUND, QUIT
         }
 
         void onAction(Action action);
