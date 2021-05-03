@@ -316,8 +316,8 @@ public final class UIHelper {
 
     private void closeMenu() {
         float duration = .5f;
-        ActorAnimation.instance().slideOutThenRemove(menuContainer, ActorAnimation.RIGHT, duration,
-                Interpolation.pow5In);
+        menuWindow.addAction(Actions.scaleTo(1, 0, duration, Interpolation.pow5));
+        menuContainer.addAction(Actions.delay(duration, Actions.removeActor()));
     }
 
     private void showMenu() {
@@ -341,8 +341,12 @@ public final class UIHelper {
         menuContainer.add(menuWindow).width(width).pad(20).padTop(menuSelectorWindow.getHeight() + 30)
             .padRight(menuSelectorWindow.getWidth() - width + 30);
 
-        ActorAnimation.instance().slideIn(menuContainer, ActorAnimation.RIGHT, duration,
+        menuWindow.setOriginX(width/2f);
+        menuWindow.setOriginY(menuWindow.getHeight());
+
+        ActorAnimation.instance().grow(menuWindow, duration,
                 Interpolation.pow5Out);
+        menuWindow.setScale(1, 0f);
         canvas.addActor(menuContainer);
     }
 
