@@ -21,6 +21,7 @@ import com.isoterik.cash4life.double_cash.components.Card;
 import com.isoterik.cash4life.double_cash.utils.PreferenceHelper;
 import com.isoterik.cash4life.double_cash.utils.UIHelper;
 import com.isoterik.mgdx.*;
+import com.isoterik.mgdx.audio.AudioManager;
 import com.isoterik.mgdx.input.ITouchListener;
 import com.isoterik.mgdx.input.TouchEventData;
 import com.isoterik.mgdx.input.TouchTrigger;
@@ -261,6 +262,9 @@ public class GamePlayScene extends Scene {
 
             card.transform.setPosition(mx, my);
         }
+
+        // Play the sound
+        AudioManager.instance().playSound(minGdx.assets.getSound("sfx/cardPlace.ogg"), 1f);
     }
 
     private void centerCards() {
@@ -313,6 +317,8 @@ public class GamePlayScene extends Scene {
 
         userChoice.transform.setPosition(x, y);
         pickedCards.removeValue(userChoice, true);
+
+        playSlideSound();
     }
 
     private void playForOpponent(ActorGameObject userChoice) {
@@ -378,6 +384,8 @@ public class GamePlayScene extends Scene {
 
         opponentChoice.transform.setPosition(x, y);
         pickedCards.removeValue(opponentChoice, true);
+
+        playSlideSound();
     }
 
     private void playForOpponent() {
@@ -408,7 +416,8 @@ public class GamePlayScene extends Scene {
                 if (userNumber == opponentNumber) {
                     int won = stakeAmount / 2;
                     balance += won;
-                    uiHelper.showGameOverDialog("YOU DREW", "+" + won, gameOverListener);
+                    uiHelper.showGameOverDialog("IT's A TIE", "+" + won, gameOverListener);
+                    playTieSound();
                 }
                 else {
                     int stake = stakeAmount;
@@ -416,19 +425,23 @@ public class GamePlayScene extends Scene {
                     if (gameType == GameType.HIGHER) {
                         if (userNumber > opponentNumber) {
                             won = stake * 2;
-                            uiHelper.showGameOverDialog("YOU WON", "+" + won, gameOverListener);
+                            uiHelper.showGameOverDialog("YOU WIN", "+" + won, gameOverListener);
+                            playWinSound();
                         }
                         else {
-                            uiHelper.showGameOverDialog("YOU LOST", "-" + stake, gameOverListener);
+                            uiHelper.showGameOverDialog("YOU LOSE", "-" + stake, gameOverListener);
+                            playLoseSound();
                         }
                     }
                     else {
                         if (userNumber < opponentNumber) {
                             won = stake * 2;
-                            uiHelper.showGameOverDialog("YOU WON", "+" + won, gameOverListener);
+                            uiHelper.showGameOverDialog("YOU WIN", "+" + won, gameOverListener);
+                            playWinSound();
                         }
                         else {
-                            uiHelper.showGameOverDialog("YOU LOST", "-" + stake, gameOverListener);
+                            uiHelper.showGameOverDialog("YOU LOSE", "-" + stake, gameOverListener);
+                            playLoseSound();
                         }
                     }
 
@@ -457,6 +470,26 @@ public class GamePlayScene extends Scene {
         Actor actor = opponentChoice.actorTransform.actor;
         actor.setPosition(opponentChoice.transform.getX(), opponentChoice.transform.getY());
         actor.setSize(opponentChoice.transform.getWidth(), opponentChoice.transform.getHeight());
+    }
+
+    private void playSlideSound() {
+        // Play the sound
+        AudioManager.instance().playSound(minGdx.assets.getSound("sfx/cardSlide.ogg"), 1f);
+    }
+
+    private void playWinSound() {
+        // Play the sound
+        AudioManager.instance().playSound(minGdx.assets.getSound("sfx/you_win.ogg"), 1f);
+    }
+
+    private void playLoseSound() {
+        // Play the sound
+        AudioManager.instance().playSound(minGdx.assets.getSound("sfx/you_lose.ogg"), 1f);
+    }
+
+    private void playTieSound() {
+        // Play the sound
+        AudioManager.instance().playSound(minGdx.assets.getSound("sfx/its_a_tie.ogg"), 1f);
     }
 
     private ActorGameObject getMaximumPick() {

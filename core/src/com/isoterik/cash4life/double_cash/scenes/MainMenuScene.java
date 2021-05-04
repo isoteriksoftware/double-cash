@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.isoterik.cash4life.double_cash.Constants;
 import com.isoterik.cash4life.double_cash.utils.PreferenceHelper;
+import com.isoterik.cash4life.double_cash.utils.Util;
 import com.isoterik.mgdx.GameObject;
 import com.isoterik.mgdx.MinGdx;
 import com.isoterik.mgdx.Scene;
@@ -50,6 +51,7 @@ public class MainMenuScene extends Scene {
         btnPlay.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                Util.playClickSound();
                 toGamePlayScene();
             }
         });
@@ -58,6 +60,7 @@ public class MainMenuScene extends Scene {
         btnHelp.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                Util.playClickSound();
                 Gdx.net.openURI("https://cash4life.com.ng/double-cash/help");
             }
         });
@@ -67,6 +70,7 @@ public class MainMenuScene extends Scene {
         btnSound.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                Util.playClickSound();
                 PreferenceHelper.instance().setSoundEnabled(!btnSound.isChecked());
                 PreferenceHelper.instance().saveChanges();
             }
@@ -76,6 +80,7 @@ public class MainMenuScene extends Scene {
         btnQuit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                Util.playClickSound();
                 minGdx.app.exit();
             }
         });

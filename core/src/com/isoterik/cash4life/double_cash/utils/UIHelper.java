@@ -109,6 +109,8 @@ public final class UIHelper {
         stake.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                Util.playClickSound();
+
                 Gdx.input.getTextInput(new Input.TextInputListener() {
                     @Override
                     public void input(String text) {
@@ -131,6 +133,8 @@ public final class UIHelper {
         btnHighest.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                Util.playClickSound();
+
                 float duration = .5f;
                 ActorAnimation.instance().slideOutThenRemove(window, ActorAnimation.UP, duration, Interpolation.pow5Out);
                 window.addAction(Actions.delay(duration, Actions.run(() -> stakeListener.onStake(GamePlayScene.GameType.HIGHER, Integer.parseInt(stake.getText())))));
@@ -141,6 +145,8 @@ public final class UIHelper {
         btnLowest.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                Util.playClickSound();
+
                 float duration = .5f;
                 ActorAnimation.instance().slideOutThenRemove(window, ActorAnimation.UP, duration, Interpolation.pow5Out);
                 window.addAction(Actions.delay(duration, Actions.run(() -> stakeListener.onStake(GamePlayScene.GameType.LOWER, Integer.parseInt(stake.getText())))));
@@ -185,6 +191,8 @@ public final class UIHelper {
         btnHome.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                Util.playClickSound();
+
                 float duration = .5f;
                 ActorAnimation.instance().slideOutThenRemove(window, ActorAnimation.UP, duration, Interpolation.pow5Out);
                 window.addAction(Actions.delay(duration, Actions.run(() -> gameOverListener.onAction(GameOverListener.Action.HOME))));
@@ -195,6 +203,8 @@ public final class UIHelper {
         btnRestart.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                Util.playClickSound();
+
                 float duration = .5f;
                 ActorAnimation.instance().slideOutThenRemove(window, ActorAnimation.UP, duration, Interpolation.pow5Out);
                 window.addAction(Actions.delay(duration, Actions.run(() -> gameOverListener.onAction(GameOverListener.Action.RESTART))));
@@ -205,6 +215,8 @@ public final class UIHelper {
         btnQuit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                Util.playClickSound();
+
                 float duration = .5f;
                 ActorAnimation.instance().slideOutThenRemove(window, ActorAnimation.UP, duration, Interpolation.pow5Out);
                 window.addAction(Actions.delay(duration, Actions.run(() -> gameOverListener.onAction(GameOverListener.Action.QUIT))));
@@ -260,6 +272,8 @@ public final class UIHelper {
         btnSettings.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                Util.playClickSound();
+
                 showMenu();
             }
         });
@@ -267,6 +281,8 @@ public final class UIHelper {
         btnQuit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                Util.playClickSound();
+
                 menuContainer.addAction(Actions.delay(.5f, Actions.run(
                         () -> menuListener.onAction(MenuListener.Action.QUIT)
                 )));
@@ -276,6 +292,8 @@ public final class UIHelper {
         btnHelp.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                Util.playClickSound();
+
                 menuContainer.addAction(Actions.delay(.5f, Actions.run(
                         () -> menuListener.onAction(MenuListener.Action.HELP)
                 )));
@@ -285,6 +303,8 @@ public final class UIHelper {
         btnSound.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                Util.playClickSound();
+
                 menuContainer.addAction(Actions.delay(.5f, Actions.run(
                         () -> menuListener.onAction(MenuListener.Action.SOUND)
                 )));

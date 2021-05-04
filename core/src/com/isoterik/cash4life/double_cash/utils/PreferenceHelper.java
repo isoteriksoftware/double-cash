@@ -3,13 +3,15 @@ package com.isoterik.cash4life.double_cash.utils;
 import com.badlogic.gdx.Preferences;
 import com.isoterik.cash4life.double_cash.Constants;
 import com.isoterik.mgdx.MinGdx;
+import com.isoterik.mgdx.audio.AudioManager;
 
 public final class PreferenceHelper {
-    private Preferences preferences;
+    private final Preferences preferences;
     private static PreferenceHelper instance;
 
     private PreferenceHelper() {
         preferences = MinGdx.instance().app.getPreferences(Constants.PREFERENCES);
+        AudioManager.instance().setSoundEnabled(isSoundEnabled());
     }
 
     public static void init() {
@@ -26,10 +28,11 @@ public final class PreferenceHelper {
 
     public void setSoundEnabled(boolean enabled) {
         preferences.putBoolean("soundEnabled", enabled);
+        AudioManager.instance().setSoundEnabled(enabled);
     }
 
     public void saveChanges() {
-        MinGdx.instance().app.postRunnable(() -> preferences.flush());
+        MinGdx.instance().app.postRunnable(preferences::flush);
     }
 }
 
