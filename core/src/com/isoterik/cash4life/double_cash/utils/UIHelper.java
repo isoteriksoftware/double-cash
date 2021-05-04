@@ -267,7 +267,7 @@ public final class UIHelper {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 menuContainer.addAction(Actions.delay(.5f, Actions.run(
-                        () -> menuListener.onAction(MenuListener.Action.SOUND)
+                        () -> menuListener.onAction(MenuListener.Action.QUIT)
                 )));
             }
         });
@@ -276,7 +276,7 @@ public final class UIHelper {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 menuContainer.addAction(Actions.delay(.5f, Actions.run(
-                        () -> menuListener.onAction(MenuListener.Action.SOUND)
+                        () -> menuListener.onAction(MenuListener.Action.HELP)
                 )));
             }
         });

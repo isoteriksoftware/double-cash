@@ -1,5 +1,6 @@
 package com.isoterik.cash4life.double_cash.scenes;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -23,6 +24,8 @@ import com.isoterik.mgdx.input.ITouchListener;
 import com.isoterik.mgdx.input.TouchEventData;
 import com.isoterik.mgdx.input.TouchTrigger;
 import com.isoterik.mgdx.m2d.components.debug.BoxDebugRenderer;
+import com.isoterik.mgdx.m2d.scenes.transition.SceneTransitions;
+import com.isoterik.mgdx.m2d.scenes.transition.TransitionDirection;
 import com.isoterik.mgdx.ui.ActorAnimation;
 import com.isoterik.mgdx.utils.WorldUnits;
 
@@ -108,15 +111,24 @@ public class GamePlayScene extends Scene {
                 mainCamera.getCamera()), worldUnits);
         setupAnimationCanvas(mainCamera.getViewport());
 
-        //setupCanvas(new StretchViewport(Constants.GUI_WIDTH, Constants.GUI_HEIGHT));
         canvas = new Stage(new StretchViewport(Constants.GUI_WIDTH, Constants.GUI_HEIGHT));
         inputManager.getInputMultiplexer().addProcessor(canvas);
 
         ActorAnimation.instance().setup(Constants.GUI_WIDTH, Constants.GUI_HEIGHT);
         uiHelper = new UIHelper(canvas);
         menuListener = action -> {
-
+            switch (action) {
+                case QUIT:
+                    quit();
+                    break;
+                case HELP:
+                    Gdx.net.openURI("https://cash4life.com.ng/double-cash/help");
+                    break;
+                case SOUND:
+                    break;
+            }
         };
+
         uiHelper.setupUI(menuListener);
         uiHelper.balanceLabel.setText(balance);
 
@@ -154,13 +166,26 @@ public class GamePlayScene extends Scene {
         };
 
         gameOverListener = action -> {
-            newGame();
-//            switch (action) {
-//                case RESTART:
-//                    newGame();
-//                    break;
-//            }
+            switch (action) {
+                case RESTART:
+                    newGame();
+                    break;
+                case HOME:
+                    goHome();
+                    break;
+                case QUIT:
+                    quit();
+            }
         };
+    }
+
+    private void goHome() {
+        minGdx.sceneManager.revertToPreviousScene(SceneTransitions.slide(1f, TransitionDirection.DOWN,
+                false, Interpolation.pow5Out));
+    }
+
+    private void quit() {
+        minGdx.app.exit();
     }
 
     private void pickRandomCards() {
