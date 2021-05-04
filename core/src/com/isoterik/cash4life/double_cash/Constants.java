@@ -9,4 +9,6 @@ public final class Constants {
     public static final float STARTING_CHANCE = 0.6f;
 
     public static final String SKIN = "skin/ui.json";
+
+    public static final String PREFERENCES = "double_cash_app_preferences";
 }

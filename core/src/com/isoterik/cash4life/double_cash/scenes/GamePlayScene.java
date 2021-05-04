@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.isoterik.cash4life.double_cash.Constants;
 import com.isoterik.cash4life.double_cash.components.Card;
+import com.isoterik.cash4life.double_cash.utils.PreferenceHelper;
 import com.isoterik.cash4life.double_cash.utils.UIHelper;
 import com.isoterik.mgdx.*;
 import com.isoterik.mgdx.input.ITouchListener;
@@ -125,6 +126,8 @@ public class GamePlayScene extends Scene {
                     Gdx.net.openURI("https://cash4life.com.ng/double-cash/help");
                     break;
                 case SOUND:
+                    PreferenceHelper.instance().setSoundEnabled(!uiHelper.btnSound.isChecked());
+                    PreferenceHelper.instance().saveChanges();
                     break;
             }
         };

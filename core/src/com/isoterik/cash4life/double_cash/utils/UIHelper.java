@@ -254,6 +254,7 @@ public final class UIHelper {
         btnSettings = new Button(skin, "settings-small");
         btnQuit = new Button(skin, "quit-small");
         btnSound = new Button(skin, "sound-small");
+        btnSound.setChecked(!PreferenceHelper.instance().isSoundEnabled());
         btnHelp = new Button(skin, "help-small");
 
         btnSettings.addListener(new ChangeListener() {

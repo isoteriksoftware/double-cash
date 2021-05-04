@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.isoterik.cash4life.double_cash.Constants;
+import com.isoterik.cash4life.double_cash.utils.PreferenceHelper;
 import com.isoterik.mgdx.GameObject;
 import com.isoterik.mgdx.MinGdx;
 import com.isoterik.mgdx.Scene;
@@ -18,6 +19,8 @@ import com.isoterik.mgdx.ui.ActorAnimation;
 
 public class MainMenuScene extends Scene {
     private MinGdx minGdx;
+
+    private Button btnSound;
 
     public MainMenuScene() {
         minGdx = MinGdx.instance();
@@ -59,7 +62,16 @@ public class MainMenuScene extends Scene {
             }
         });
 
-        Button btnSound = new Button(skin, "sound");
+        btnSound = new Button(skin, "sound");
+        btnSound.setChecked(!PreferenceHelper.instance().isSoundEnabled());
+        btnSound.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                PreferenceHelper.instance().setSoundEnabled(!btnSound.isChecked());
+                PreferenceHelper.instance().saveChanges();
+            }
+        });
+
         Button btnQuit = new Button(skin, "quit");
         btnQuit.addListener(new ChangeListener() {
             @Override
@@ -89,6 +101,11 @@ public class MainMenuScene extends Scene {
     private void toGamePlayScene() {
         minGdx.setScene(new GamePlayScene(), SceneTransitions.slide(1f, TransitionDirection.UP,
                 true, Interpolation.pow5Out));
+    }
+
+    @Override
+    public void transitionedToThisScene(Scene previousScene) {
+        btnSound.setChecked(!PreferenceHelper.instance().isSoundEnabled());
     }
 }
 
