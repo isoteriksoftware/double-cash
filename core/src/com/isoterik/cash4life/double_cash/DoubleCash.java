@@ -3,6 +3,7 @@ package com.isoterik.cash4life.double_cash;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.isoterik.cash4life.double_cash.scenes.GamePlayScene;
+import com.isoterik.cash4life.double_cash.scenes.MainMenuScene;
 import com.isoterik.mgdx.MinGdxGame;
 import com.isoterik.mgdx.Scene;
 import com.isoterik.mgdx.m2d.scenes.transition.SceneTransitions;
@@ -17,7 +18,7 @@ public class DoubleCash extends MinGdxGame {
 		loadAssets();
 
 		splashTransition = SceneTransitions.fade(1f);
-		return new GamePlayScene();
+		return new MainMenuScene();
 	}
 
 	private void loadAssets() {

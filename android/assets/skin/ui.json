@@ -150,6 +150,18 @@ ButtonStyle: {
 		down: btn-exit-small-down
 		over: btn-exit-small-over
 	}
+	help: {
+		up: btn-help-up
+		down: btn-help-down
+		over: btn-help-over
+	}
+	sound: {
+		up: btn-sound-up
+		down: btn-sound-down
+		over: btn-sound-overpng
+		checked: btn-sound-disabled
+		checkedOver: btn-sound-overpng
+	}
 }
 LabelStyle: {
 	default: {
@@ -220,6 +232,13 @@ TextButtonStyle: {
 		down: btn-down
 		over: btn-hover
 		disabled: btn-disabled
+	}
+	large: {
+		parent: default
+		font: font64
+		up: btn-big-up
+		down: btn-big-down
+		over: btn-big-over
 	}
 }
 TextFieldStyle: {
