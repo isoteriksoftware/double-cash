@@ -189,7 +189,7 @@ public class GamePlayScene extends Scene {
     }
 
     private void quit() {
-        minGdx.app.exit();
+        goHome();
     }
 
     private void pickRandomCards() {
